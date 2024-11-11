@@ -12,14 +12,15 @@ enum Suits {
 
 class Card {
      private:
-     Suits suit;
-     int value;
+     Suits m_suit;
+     int m_value;
 
      public:
-     Card(Suits suit_in, int value_in);
-     int get_val(int card_value);
-     
+     Card(Suits suit, int value);
+
+     int get_value();    
 };
+
 class Deck {
     private:
     std::vector<Card> cards;
