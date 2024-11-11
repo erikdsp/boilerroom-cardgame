@@ -15,10 +15,11 @@ enum Suits {
 
 class Card {
      private:
-     int suit;
+     Suits suit;
      int value;
 
      public:
+     Card(Suits suit_in, int value_in);
      int get_val(int card_value);
      
 };
