@@ -18,7 +18,8 @@ class Card {
      public:
      Card(Suits suit, int value);
 
-     int get_value();    
+     int get_value();
+     Suits getsuit();    
 };
 
 class Deck {

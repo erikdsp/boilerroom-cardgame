@@ -16,6 +16,14 @@ int Card::get_value()
     return m_value;  
 }
 
+/** 
+ * @return Suit of the card
+ */
+Suits Card::getsuit()
+{
+    return m_suit;
+}
+
 
 /**  
  * Constructor that creates a standard deck of 52 cards
