@@ -3,35 +3,34 @@
 #include <vector>
 
 enum Suits {
-    HEARTS,
     CLUBS,
     DIAMONDS,
-    SPADES
+    SPADES,
+    HEARTS
 };
-// enum Pips {
-//     TWO=2,
 
-// }
 
 class Card {
      private:
-     Suits suit;
-     int value;
+     Suits m_suit;
+     int m_value;
 
      public:
-     Card(Suits suit_in, int value_in);
-     int get_val(int card_value);
-     
+     Card(Suits suit, int value);
+
+     int get_value();
+     Suits getsuit();    
 };
+
 class Deck {
     private:
-    std::vector<Card> cards;
+    std::vector<Card> m_cards{};
     
     public:
+    Deck();
     Deck(std::vector<Card> &deck);
 };
 
-// Card(Suit, value);
 
 
 #endif
