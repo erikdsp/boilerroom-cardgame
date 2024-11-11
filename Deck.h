@@ -28,7 +28,7 @@ enum Values{
 };
 
 class Card {
-    private:
+    protected:
     const Suits suit;
     const Values value;
 
@@ -39,6 +39,7 @@ class Card {
 
 class BlackjackCard : Card {
     public:
+    using Card::Card;
     std::vector<int> values();
 };
 
@@ -53,12 +54,12 @@ class DeckShuffler {
 
 class Deck {
     private:
-    std::stack<Card> cards;
+    std::stack<BlackjackCard> cards;
     
     public:
     Deck();
-    Deck(std::vector<Card> &deck);
-    Card draw();
+    Deck(std::vector<BlackjackCard> &deck);
+    BlackjackCard draw();
     void shuffle(DeckShuffler &);
 };
 

@@ -3,18 +3,23 @@
 
 #include <string>
 #include <vector>
+#include <numeric>
+#include <algorithm>
+#include <iostream>
+
 #include "Deck.h"
 
 class Deal {
     private:
     const Player& player;
-    std::vector<Card> cards; 
+    std::vector<BlackjackCard> cards; 
     
     public:
-    Deal(Player&, Card& card);
+    Deal(Player&, BlackjackCard card);
     Deal(Player&);
-    void add_card( Card& );
-    int sum() const;
+    void add_card( BlackjackCard card );
+    int min_sum() const;
+    int max_sum() const;
     bool play() const;
 };
 

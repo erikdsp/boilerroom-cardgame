@@ -1,6 +1,3 @@
-#include <algorithm>
-#include <numeric>
-#include <iostream>
 #include "Player.h"
 
 Deal::Deal(Player& player) : 
@@ -8,19 +5,30 @@ Deal::Deal(Player& player) :
 
 }
 
-Deal::Deal(Player& player, Card& card) :
+Deal::Deal(Player& player, BlackjackCard card) :
     player{player},
     cards{std::move(card)}
 {
 
 }
 
-int Deal::sum() const{
-    int sum = std::accumulate(cards.begin(), cards.end(), int{0});
+int Deal::min_sum() const{
+    int sum = {};
+    for (BlackjackCard c : cards){
+        sum += std::ranges::min(c.values());
+    }
     return sum;
 }
 
-void Deal::add_card( Card& card ){
+int Deal::max_sum() const{
+    int sum = {};
+    for (BlackjackCard c : cards){
+        sum += std::ranges::max(c.values());
+    }
+    return sum;
+}
+
+void Deal::add_card( BlackjackCard card ){
     cards.emplace_back(std::move(card));
 }
 

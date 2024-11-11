@@ -31,13 +31,13 @@ DeckShuffler::DeckShuffler(uint32_t seed) : mt({seed}){
 
 }
 
-Deck::Deck(std::vector<Card> &deck)
+Deck::Deck(std::vector<BlackjackCard> &deck)
     : cards(deck.begin(), deck.end()){}
 
 Deck::Deck(){
     for ( int s {0}; s < 4; s++ ){
         for ( int v {ACE}; v <= KING; v++ ){
-            cards.emplace(Card{
+            cards.emplace(BlackjackCard{
                 static_cast<Suits>(s), 
                 static_cast<Values>(v)
                 });
@@ -45,14 +45,14 @@ Deck::Deck(){
     }
 }
 
-Card Deck::draw(){
-    Card card = cards.top();
+BlackjackCard Deck::draw(){
+    BlackjackCard card = cards.top();
     cards.pop();
     return card;
 }
 
 void Deck::shuffle( DeckShuffler& shuffler ){
-    std::vector<Card> tmp;
+    std::vector<BlackjackCard> tmp;
 
     while ( !cards.empty() ){
         tmp.emplace_back(cards.top());
@@ -61,7 +61,7 @@ void Deck::shuffle( DeckShuffler& shuffler ){
 
     std::ranges::shuffle( tmp, shuffler );
 
-    for( Card c : tmp ){
+    for( BlackjackCard c : tmp ){
         cards.push(c);
     }
 }
