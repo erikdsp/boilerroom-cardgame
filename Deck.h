@@ -9,16 +9,32 @@ enum Suits {
     HEARTS
 };
 
+enum Values {
+    ACE = 1,
+    TWO,
+    THREE,
+    FOUR,
+    FIVE,
+    SIX,
+    SEVEN,
+    EIGHT,
+    NINE,
+    TEN,
+    JACK,
+    QUEEN,
+    KING
+};
+
 
 class Card {
      private:
      Suits m_suit;
-     int m_value;
+     Values m_value;
 
      public:
-     Card(Suits suit, int value);
+     Card(Suits suit, Values value);
 
-     int get_value();
+     Values get_value();
      Suits getsuit();    
 };
 

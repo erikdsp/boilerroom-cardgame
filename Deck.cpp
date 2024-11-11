@@ -5,13 +5,13 @@
 /** 
  * Standard constructor 
  */
-Card::Card(Suits suit, int value)
+Card::Card(Suits suit, Values value)
     : m_suit{suit}, m_value{value}{}
 
 /** 
- * @return value int. Should probably use other data type to allow different values, example ACE equals 1 or 11?
+ * @return Value of the card
  */
-int Card::get_value()
+Values Card::get_value()
 {
     return m_value;  
 }
@@ -33,7 +33,7 @@ Deck::Deck()
 {
     for (int i = 0 ; i < 52 ; i++)
     {
-       m_cards.push_back({static_cast<Suits>(i/13), (i%13)+1});   
+       m_cards.push_back({static_cast<Suits>(i/13),static_cast<Values>((i%13)+1)});   
     }
 }
 
