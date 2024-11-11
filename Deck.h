@@ -23,13 +23,13 @@ class Card {
 
 class Deck {
     private:
-    std::vector<Card> cards;
+    std::vector<Card> m_cards{};
     
     public:
+    Deck();
     Deck(std::vector<Card> &deck);
 };
 
-// Card(Suit, value);
 
 
 #endif
