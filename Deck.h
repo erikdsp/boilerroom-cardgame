@@ -1,5 +1,7 @@
 #ifndef DECK_H
 #define DECK_H
+#include <random>
+#include <stack>
 #include <vector>
 
 enum Suits {
@@ -8,30 +10,59 @@ enum Suits {
     DIAMONDS,
     SPADES
 };
-// enum Pips {
-//     TWO=2,
 
-// }
+enum Values{
+    ACE = 1,
+    TWO,
+    THREE,
+    FOUR,
+    FIVE,
+    SIX,
+    SEVEN,
+    EIGHT,
+    NINE,
+    TEN,
+    JACK,
+    QUEEN,
+    KING
+};
 
 class Card {
-     private:
-     Suits suit;
-     int value;
+    private:
+    const Suits suit;
+    const Values value;
 
-     public:
-     Card(Suits suit_in, int value_in);
-     int get_val(int card_value);
-     
+    public:
+    Card(Suits suit_in, Values value_in);
+    constexpr int get_val() const;   
 };
+
+class BlackjackCard : Card {
+    public:
+    std::vector<int> values();
+};
+
+class DeckShuffler {
+    private:
+    std::mt19937 mt;
+
+    public:
+    DeckShuffler();
+    DeckShuffler(uint32_t seed);
+};
+
 class Deck {
     private:
-    std::vector<Card> cards;
+    std::stack<Card> cards;
     
     public:
+    Deck();
     Deck(std::vector<Card> &deck);
+    Card draw();
+    void shuffle(DeckShuffler &);
 };
 
-// Card(Suit, value);
+
 
 
 #endif
