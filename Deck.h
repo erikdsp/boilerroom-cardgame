@@ -3,15 +3,12 @@
 #include <vector>
 
 enum Suits {
-    HEARTS,
     CLUBS,
     DIAMONDS,
-    SPADES
+    SPADES,
+    HEARTS
 };
-// enum Pips {
-//     TWO=2,
 
-// }
 
 class Card {
      private:
