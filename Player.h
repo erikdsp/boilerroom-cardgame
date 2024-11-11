@@ -7,14 +7,15 @@
 
 class Deal {
     private:
-    Player& player;
-    std::vector<int> cards; //std::vector<Cards>; 
+    const Player& player;
+    std::vector<Card> cards; 
     
     public:
     Deal(Player&, Card& card);
-    Deal(Player&, Card& first, Card& second);
+    Deal(Player&);
     void add_card( Card& );
-    int sum();
+    int sum() const;
+    bool play() const;
 };
 
 class Player {
@@ -25,7 +26,7 @@ class Player {
     public:
     Player();
     Player(std::string, double);
-    bool hit_or_stand(Deal&);
+    bool hit_or_stand() const;
     double bid(double min, double max);
 };
 
