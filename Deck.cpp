@@ -44,3 +44,17 @@ Deck::Deck()
 Deck::Deck(std::vector<Card>& deck)
     : m_cards{deck} {}
 
+
+RandomGenerator::RandomGenerator()
+    : m_rnd {std::random_device {}}, m_seeds {m_rnd(), m_rnd(), m_rnd(), m_rnd()}, m_mt_rand{m_seeds}
+{
+    // std::random_device rnd{};
+	// std::seed_seq seeds{ rnd(), rnd(), rnd(), rnd(), rnd(), rnd(), rnd(), rnd() }; // seed with 8 random integers from std::random_device
+	// std::mt19937 mt_rand{ seeds }; // initialize Mersenne Twister with the std::seed_seq
+    // m_mt_rand = mt_rand;
+}
+
+int RandomGenerator::rnd(int min, int max)
+{
+    return std::uniform_int_distribution { 1, 52 }(m_mt_rand);
+}

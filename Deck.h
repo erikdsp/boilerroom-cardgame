@@ -49,12 +49,24 @@ class Deck {
     Deck(std::vector<Card> &deck);
 };
 
+class RandomGenerator {
+    private:
+    std::random_device m_rnd;
+    std::seed_seq m_seeds;
+    std::mt19937 m_mt_rand;
+    public:
+    RandomGenerator();
+    int rnd(int min, int max);
+    // friend class DeckShuffle;
+};
+
 class DeckShuffle {
     private:
     public:
-    void print_number(std::mt19937 rnd)
+    DeckShuffle(){}
+    void print_random_number(RandomGenerator r)
     {
-        std::cout << std::uniform_int_distribution { 1, 52 }(rnd);
+        std::cout << r.rnd(1, 52) << "\n";
     }
     int generate_number(std::mt19937 rnd, int min, int max)
     {
