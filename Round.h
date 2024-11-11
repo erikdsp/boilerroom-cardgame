@@ -24,6 +24,11 @@ class Round
     void play_round();                  // eventuellt för att sätta ihop alla medlemsfunktioner ovan
 };
 
+class Game
+{
+    Round round;
+
+};
 
 
 #endif
