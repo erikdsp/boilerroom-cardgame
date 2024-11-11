@@ -12,13 +12,13 @@ Player::Player(std::string name, double buyin) :
 
 }
 
-double Player::bid() {
+double Player::bid(double min, double max) {
     double input {};
     
     do
     {
         std::cin >> input;
-    } while ( input > purse || input < 1 );
+    } while ( input > purse || input < min );
 
 }
 

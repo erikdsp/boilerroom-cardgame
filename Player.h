@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include "Deck.h"
 
 class Deal {
     private:
@@ -11,7 +12,7 @@ class Deal {
     
     public:
     Deal(Player&, Card& card);
-    Deal(Player&, Card& first, Card&, second);
+    Deal(Player&, Card& first, Card& second);
     void add_card( Card& );
     int sum();
 };
