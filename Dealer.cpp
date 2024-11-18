@@ -5,17 +5,8 @@
 */
 
 Card::Card(int suit_in, int value_in) 
-: m_suit{ suit_in }, m_value{ value_in } {}
+: suit{ suit_in }, value{ value_in } {}
 
-
-int Card::suit()
-{
-    return m_suit;
-}
-int Card::value()
-{
-    return m_value;
-}
 
 /*
  -- DEAL --
@@ -38,12 +29,12 @@ int Deal::min_value() const{
     int sum {};
 
     for ( auto c : cards){
-        if ( c.value() == 1 ){
+        if ( c.value == 1 ){
             sum += 1;
-        } else if ( c.value() > 10 ) {
+        } else if ( c.value > 10 ) {
             sum += 10;
         } else {
-            sum += c.value();
+            sum += c.value;
         }
     }
 
@@ -54,12 +45,12 @@ int Deal::max_value() const{
     int sum {};
 
     for ( auto c : cards){
-        if ( c.value() == 1 ){
+        if ( c.value == 1 ){
             sum += 11;
-        } else if ( c.value() > 10 ) {
+        } else if ( c.value > 10 ) {
             sum += 10;
         } else {
-            sum += c.value();
+            sum += c.value;
         }
     }
     

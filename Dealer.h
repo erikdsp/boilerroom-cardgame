@@ -8,15 +8,10 @@
 #include <stack>
 
 class Card{
-    private:
-    int m_suit;
-    int m_value;
-
     public:
+    int suit;
+    int value;
     Card(int, int);
-    int suit();
-    int value();
-
 };
 
 class Deal {
