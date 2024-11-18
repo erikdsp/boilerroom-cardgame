@@ -58,19 +58,22 @@ int Deal::max_value() const{
 }
 
 /** 
- * -- RandomGenerator --
+ * -- RANDOM GENERATOR --
  * Seeds the Mersenne Twister with std::random_device
 */
 RandomGenerator::RandomGenerator()
     : m_mt_rand{std::random_device{}()} {}
 
+/** 
+ * Seeds the Mersenne Twister with a seed of your choice
+*/
 RandomGenerator::RandomGenerator(uint32_t seed)
     : m_mt_rand{seed} {}
 
 
 
 /** 
- * -- Deck --
+ * -- DECK --
 */
 Deck::Deck() {}
 
@@ -83,9 +86,28 @@ Deck::Deck(std::vector<Card> in) :
  */
 void Deck::add_standard_deck()
 {
-    for (int i = 0 ; i < 52 ; i++)
+    for (int i = 0 ; i < 52 ; ++i)
     {
        m_cards.push_back({(i/13)+1,(i%13)+1});   
+    }
+}
+
+/**  
+ * Adds several standard 52 card decks to the deck
+ * @param num_of_decks
+ */
+void Deck::add_standard_decks(int num_of_decks)
+{
+    if (num_of_decks > 0)
+    {    
+        for (int k = 0 ; k < num_of_decks ; ++k)
+        {
+            add_standard_deck();
+        }
+    }
+    else
+    {
+        std::cerr << "Trying to add 0 or negative number of decks\n";
     }
 }
 
@@ -115,7 +137,7 @@ Card Deck::draw(){
 }
 
 /** 
- * -- CardDealer --
+ * -- CARD DEALER --
 */
 CardDealer::CardDealer() : 
     shoe{},

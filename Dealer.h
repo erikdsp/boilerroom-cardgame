@@ -56,6 +56,7 @@ class Deck{
 
     // add the standard 52 cards
     void add_standard_deck();
+    void add_standard_decks(int num_of_decks);
 
     // shuffle the current deck held in m_cards
     void shuffle_deck(std::mt19937 gen);
@@ -76,7 +77,7 @@ class CardDealer {
     Deal deal();
     Deal deal(Deal);
 
-    void reshuffle (std::vector<Card>);
+    void reshuffle (std::vector<Card>);     // replace shoe with a deck of your choice
 
     
     void discard_deal(std::vector<Card>); // takes cards and puts them in discard
