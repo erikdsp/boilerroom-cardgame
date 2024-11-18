@@ -1,6 +1,7 @@
 #ifndef CHAS_BLACKJACK_DEALER_H
 #define CHAS_BLACKJACK_DEALER_H
 
+#include "CardEnums.h"
 #include <vector>
 #include <random>
 #include <algorithm>
@@ -26,8 +27,8 @@ class Deal {
     Deal& add_card(Card);
 
     //min/max due to aces having two possible values
-    int min_value() const;
-    int max_value() const;
+    int min_value() const;      // evaluates the first ace as 1
+    int max_value() const;      // evaluates the first ace as 11
 
     int is_bust() const;
 
