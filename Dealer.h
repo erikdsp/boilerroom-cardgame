@@ -16,9 +16,7 @@ class Card{
     Card(int, int);
     int suit();
     int value();
-    //public accessible const references to privates
-    // const int& suit; 
-    // const int& value;
+
 };
 
 class Deal {
@@ -59,6 +57,7 @@ class Deck{
     Deck();
     Deck(std::vector<Card>);
 
+    void add_standard_deck();
     void shuffle_deck(std::mt19937 gen);
     // void shuffle(uint32_t); //deterministic "shuffle"
 

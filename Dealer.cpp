@@ -84,6 +84,18 @@ Deck::Deck(std::vector<Card> in) :
     m_cards {in} {}
 
 
+/**  
+ * Adds the standard 52 cards to the deck
+ */
+void Deck::add_standard_deck()
+{
+    for (int i = 0 ; i < 52 ; i++)
+    {
+       m_cards.push_back({(i/13)+1,(i%13)+1});   
+    }
+}
+
+
 void Deck::shuffle_deck(std::mt19937 r)
 {
     std::ranges::shuffle(m_cards, r);
@@ -92,7 +104,9 @@ void Deck::shuffle_deck(std::mt19937 r)
 // void Deck::shuffle(uint32_t) {}
 
 Card Deck::draw(){
-    return Card{3,1};
+    Card tmp = m_cards.back();
+    m_cards.pop_back();            // no error checking yet
+    return tmp;
 }
 
 /** 
