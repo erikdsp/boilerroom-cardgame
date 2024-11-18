@@ -3,6 +3,8 @@
 
 int main()
 {
+
+    // Very basic testing of shuffle_deck and draw functions
     RandomGenerator gen;
     Deck deck1{};
     deck1.add_standard_deck();

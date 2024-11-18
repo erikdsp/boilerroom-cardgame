@@ -59,6 +59,7 @@ int Deal::max_value() const{
 
 /** 
  * -- RandomGenerator --
+ * Seeds the Mersenne Twister with std::random_device
 */
 RandomGenerator::RandomGenerator()
     : m_mt_rand{std::random_device{}()} {}
@@ -68,8 +69,6 @@ RandomGenerator::RandomGenerator()
  * -- Deck --
 */
 Deck::Deck() {}
-
-// Deck::Deck() : gen{std::random_device{}()} {}
 
 Deck::Deck(std::vector<Card> in) : 
     m_cards {in} {}
@@ -86,7 +85,10 @@ void Deck::add_standard_deck()
     }
 }
 
-
+/**  
+ * Shuffles the deck held in m_cards
+ * @param r random generator
+ */
 void Deck::shuffle_deck(std::mt19937 r)
 {
     std::ranges::shuffle(m_cards, r);
@@ -94,6 +96,10 @@ void Deck::shuffle_deck(std::mt19937 r)
 
 // void Deck::shuffle(uint32_t) {}
 
+/** 
+ * Draw the last card from the deck and remove it from m_cards
+ * @return Card
+*/
 Card Deck::draw(){
     Card tmp = m_cards.back();
     m_cards.pop_back();            // no error checking yet

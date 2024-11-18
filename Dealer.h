@@ -52,7 +52,10 @@ class Deck{
     Deck();
     Deck(std::vector<Card>);
 
+    // add the standard 52 cards
     void add_standard_deck();
+
+    // shuffle the current deck held in m_cards
     void shuffle_deck(std::mt19937 gen);
     // void shuffle(uint32_t); //deterministic "shuffle"
 
