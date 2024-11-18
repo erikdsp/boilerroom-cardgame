@@ -28,8 +28,8 @@ Deal& Deal::add_card(Card c){
 int Deal::min_value() const{
     int sum {};
 
-    for ( auto c : cards){
-        if ( c.value == 1 ){
+    for ( auto c : cards) {
+        if ( c.value == Cards::ACE ){
             sum += 1;
         } else if ( c.value > 10 ) {
             sum += 10;
@@ -44,9 +44,13 @@ int Deal::min_value() const{
 int Deal::max_value() const{
     int sum {};
 
-    for ( auto c : cards){
-        if ( c.value == 1 ){
+    for ( auto c : cards) {
+        bool counted_one_ace{false};
+        if ( c.value == Cards::ACE && counted_one_ace ){
+            sum += 1;
+        } else if ( c.value == Cards::ACE ){
             sum += 11;
+            counted_one_ace = true;
         } else if ( c.value > 10 ) {
             sum += 10;
         } else {
