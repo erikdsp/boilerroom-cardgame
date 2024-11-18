@@ -4,8 +4,17 @@
  -- CARD --
 */
 
-Card::Card(int suit_in, int value_in) : m_suit{suit_in}, m_value{value_in},
-    suit{m_suit}, value{m_value}{
+Card::Card(int suit_in, int value_in) 
+: m_suit{ suit_in }, m_value{ value_in } {}
+
+
+int Card::suit()
+{
+    return m_suit;
+}
+int Card::value()
+{
+    return m_value;
 }
 
 /*
@@ -29,12 +38,12 @@ int Deal::min_value() const{
     int sum {};
 
     for ( auto c : cards){
-        if ( c.value == 1 ){
+        if ( c.value() == 1 ){
             sum += 1;
-        } else if ( c.value > 10 ) {
+        } else if ( c.value() > 10 ) {
             sum += 10;
         } else {
-            sum += c.value;
+            sum += c.value();
         }
     }
 
@@ -45,32 +54,50 @@ int Deal::max_value() const{
     int sum {};
 
     for ( auto c : cards){
-        if ( c.value == 1 ){
+        if ( c.value() == 1 ){
             sum += 11;
-        } else if ( c.value > 10 ) {
+        } else if ( c.value() > 10 ) {
             sum += 10;
         } else {
-            sum += c.value;
+            sum += c.value();
         }
     }
     
     return sum;
 }
 
-Deck::Deck() : gen{std::random_device{}()}{
+/** 
+ * -- RandomGenerator --
+*/
+RandomGenerator::RandomGenerator()
+    : m_mt_rand{std::random_device{}()} {}
 
-}
+
+/** 
+ * -- Deck --
+*/
+Deck::Deck() {}
+
+// Deck::Deck() : gen{std::random_device{}()} {}
 
 Deck::Deck(std::vector<Card> in) : 
-    gen{std::random_device{}()}, 
-    cards {in}{
+    m_cards {in} {}
 
+
+void Deck::shuffle_deck(std::mt19937 r)
+{
+    std::ranges::shuffle(m_cards, r);
 }
+
+// void Deck::shuffle(uint32_t) {}
 
 Card Deck::draw(){
     return Card{3,1};
 }
 
+/** 
+ * -- CardDealer --
+*/
 CardDealer::CardDealer() : 
     shoe{},
     discard{} {

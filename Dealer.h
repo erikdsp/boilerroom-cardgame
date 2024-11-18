@@ -3,6 +3,9 @@
 
 #include <vector>
 #include <random>
+#include <algorithm>
+#include <iostream>
+#include <stack>
 
 class Card{
     private:
@@ -11,10 +14,11 @@ class Card{
 
     public:
     Card(int, int);
-    
+    int suit();
+    int value();
     //public accessible const references to privates
-    const int& suit; 
-    const int& value;
+    // const int& suit; 
+    // const int& value;
 };
 
 class Deal {
@@ -37,20 +41,26 @@ class Deal {
     std::vector<Card> empty();
 };
 
+class RandomGenerator 
+{
+    public:
+    std::mt19937 m_mt_rand;
+    public:
+    RandomGenerator();
+};
+
+
 class Deck{
     private:
-    // random number generater for the shuffling
-    std::mt19937 gen;
-
     // container for the cards
-    std::vector<Card> cards;
+    std::vector<Card> m_cards{};
 
     public:
     Deck();
     Deck(std::vector<Card>);
 
-    void shuffle();
-    void shuffle(uint32_t); //deterministic "shuffle"
+    void shuffle_deck(std::mt19937 gen);
+    // void shuffle(uint32_t); //deterministic "shuffle"
 
     // return last card from the deck
     Card draw(); // exception on empty deck
