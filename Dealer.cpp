@@ -61,6 +61,25 @@ Deck::Deck() : gen{std::random_device{}()}{
 
 }
 
+Card Deck::draw(){
+    return Card{3,1};
+}
+
+CardDealer::CardDealer() : 
+    shoe{},
+    discard{} {
+
+}
+
+void CardDealer::reshuffle(std::vector<Card> cards){
+    shoe = Deck{cards};
+}
+
+Deal CardDealer::deal(){
+    return Deal(shoe.draw());
+}
+
+
 Deal CardDealer::deal(Deal current_deal){
     Deal new_deal { current_deal.add_card(shoe.draw()) };
     return new_deal;
