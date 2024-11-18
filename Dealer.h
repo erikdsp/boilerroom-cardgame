@@ -25,7 +25,7 @@ class Deal {
     Deal();
     Deal(Card);
 
-    void add_card(Card);
+    Deal& add_card(Card);
 
     //min/max due to aces having two possible values
     int min_value() const;
@@ -53,7 +53,7 @@ class Deck{
     void shuffle(uint32_t); //deterministic "shuffle"
 
     // return last card from the deck
-    Card draw();
+    Card draw(); // exception on empty deck
 
     // for testing
     void set_seed(uint32_t);
@@ -67,8 +67,12 @@ class CardDealer {
 
     public:
     CardDealer();
+
     Deal deal();
     Deal deal(Deal);
+
+    void reshuffle (std::vector<Card>);
+
     
     void discard(std::vector<Card>); // takes cards and puts them in discard
 };
