@@ -105,8 +105,12 @@ void Deck::shuffle_deck(std::mt19937 r)
  * @return Card
 */
 Card Deck::draw(){
-    Card tmp = m_cards.back();
-    m_cards.pop_back();            // no error checking yet
+    if (m_cards.size() == 0)
+    {
+        throw std::out_of_range("Trying to draw card from empty vector");
+    }
+    Card tmp = m_cards.back();      
+    m_cards.pop_back();             
     return tmp;
 }
 
