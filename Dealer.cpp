@@ -20,6 +20,11 @@ Deal::Deal(Card card) : cards{std::move(card)}{
 
 }
 
+Deal& Deal::add_card(Card c){
+    cards.push_back(c);
+    return *this;
+}
+
 int Deal::min_value() const{
     int sum {};
 
@@ -54,4 +59,13 @@ int Deal::max_value() const{
 
 Deck::Deck() : gen{std::random_device{}()}{
 
+}
+
+Deal CardDealer::deal(Deal current_deal){
+    Deal new_deal { current_deal.add_card(shoe.draw()) };
+    return new_deal;
+}
+
+Deal& operator+= (Deal& lhs, Card& rhs){
+    return lhs.add_card(rhs);
 }
