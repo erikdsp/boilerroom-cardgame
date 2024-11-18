@@ -1,0 +1,9 @@
+SCENARIO (){
+    GIVEN () {
+        WHEN() {
+            THEN (){
+                
+            }
+        }
+    }
+}
