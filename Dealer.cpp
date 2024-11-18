@@ -64,6 +64,10 @@ int Deal::max_value() const{
 RandomGenerator::RandomGenerator()
     : m_mt_rand{std::random_device{}()} {}
 
+RandomGenerator::RandomGenerator(uint32_t seed)
+    : m_mt_rand{seed} {}
+
+
 
 /** 
  * -- Deck --

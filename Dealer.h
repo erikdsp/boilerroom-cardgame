@@ -39,7 +39,8 @@ class RandomGenerator
     public:
     std::mt19937 m_mt_rand;
     public:
-    RandomGenerator();
+    RandomGenerator();          // seeds with std::random_device
+    RandomGenerator(uint32_t seed);  // provide your own seed for deterministic "shuffle"
 };
 
 
@@ -57,13 +58,9 @@ class Deck{
 
     // shuffle the current deck held in m_cards
     void shuffle_deck(std::mt19937 gen);
-    // void shuffle(uint32_t); //deterministic "shuffle"
 
     // return last card from the deck
     Card draw(); // exception on empty deck
-
-    // for testing
-    void set_seed(uint32_t);
 
 };
 
