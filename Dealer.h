@@ -30,7 +30,7 @@ class Deal {
     int min_value() const;      // evaluates the first ace as 1
     int max_value() const;      // evaluates the first ace as 11
 
-    int is_bust() const;
+    bool is_bust() const;
 
     // for returning the cards when the deal is finished playing
     std::vector<Card> empty();

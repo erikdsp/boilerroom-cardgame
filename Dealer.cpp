@@ -61,6 +61,13 @@ int Deal::max_value() const{
     return sum;
 }
 
+bool Deal::is_bust() const
+{
+    if (min_value() > 21) return true;
+    else return false;
+}
+
+
 /** 
  * -- RANDOM GENERATOR --
  * Seeds the Mersenne Twister with std::random_device
