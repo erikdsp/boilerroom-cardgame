@@ -61,6 +61,12 @@ Deck::Deck() : gen{std::random_device{}()}{
 
 }
 
+Deck::Deck(std::vector<Card> in) : 
+    gen{std::random_device{}()}, 
+    cards {in}{
+
+}
+
 Card Deck::draw(){
     return Card{3,1};
 }
