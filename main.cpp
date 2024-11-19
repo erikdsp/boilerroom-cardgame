@@ -14,9 +14,9 @@ Deal player2{};
 
 if (!player1.playing())
 {
-    if (bj_dealer.another_card(player1))
+    if (bj_dealer.another_card(player1))    // passing reference changes player1
     {
-        bj_dealer.deal(player1);    // passing reference changes player1
+        bj_dealer.deal(player1);            // passing reference changes player1
     }
 }
 
