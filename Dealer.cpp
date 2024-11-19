@@ -16,9 +16,10 @@ Deal::Deal() : cards{} {
 
 }
 
-Deal::Deal(Card card) : cards{std::move(card)}{
+// Deal::Deal(Card card) : cards{std::move(card)}{}
+Deal::Deal(Card card) : cards{card} {}
 
-}
+
 
 Deal& Deal::add_card(Card c){
     cards.push_back(c);
@@ -67,6 +68,11 @@ bool Deal::is_bust() const
     else return false;
 }
 
+// for testing/debugging
+std::vector<Card> Deal::get_cards() 
+    {
+        return cards;
+    }
 
 /** 
  * -- RANDOM GENERATOR --
@@ -164,7 +170,7 @@ Deal CardDealer::deal(){
     return Deal(shoe.draw());
 }
 
-
+// todo: evaluate current_deal and 
 Deal CardDealer::deal(Deal current_deal){
     Deal new_deal { current_deal.add_card(shoe.draw()) };
     return new_deal;

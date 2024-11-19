@@ -21,8 +21,9 @@ class Deal {
     std::vector<Card> cards;
 
     public:
-    Deal();
-    Deal(Card);
+    Deal();         // creates an empty deal
+    Deal(Card);     // creates a deal with one card
+                    // do we also want a constructor with a std::vector<Card> ?
 
     Deal& add_card(Card);
 
@@ -31,6 +32,9 @@ class Deal {
     int max_value() const;      // evaluates the first ace as 11
 
     bool is_bust() const;
+
+    // for testing/debugging
+    std::vector<Card> get_cards();  
 
     // for returning the cards when the deal is finished playing
     std::vector<Card> empty();
@@ -75,7 +79,8 @@ class CardDealer {
     public:
     CardDealer();
 
-    Deal deal();
+    // all logic about the game go into the deal functions
+    Deal deal();            //
     Deal deal(Deal);
 
     void reshuffle (std::vector<Card>);     // replace shoe with a deck of your choice

@@ -3,16 +3,9 @@
 
 int main()
 {
-
-    // Very basic testing of shuffle_deck and draw functions
-    // RandomGenerator gen();   // default contructor
-    RandomGenerator gen(0);     // provide seed for deterministic shuffle
-    Deck deck1{};
-    deck1.add_standard_deck();
-    deck1.shuffle_deck(gen.m_mt_rand);
-    std::cout << deck1.draw().value << "\n";
-    std::cout << deck1.draw().value << "\n";
-    std::cout << deck1.draw().value << "\n";
+    // simple test of Deal constructor
+    Deal deal1{{Cards::CLUBS, Cards::ACE}};
+    std::cout << deal1.get_cards().size() << "\n";
 
     return 0;
 }
