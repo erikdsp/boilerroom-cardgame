@@ -23,6 +23,8 @@ Deal::Deal(Card card) : cards{card} {}
 
 Deal& Deal::add_card(Card c){
     cards.push_back(c);
+    // if we use ncurses - call print function here to update screen with new card
+    // if we use std::cout maybe also here but print all cards
     if (is_bust) m_playing = false;
     return *this;
 }
@@ -222,6 +224,11 @@ bool CardDealer::another_card(Deal& d)
         m_players_in_game -= 1;
         return false;
     }
+}
+
+bool CardDealer::game_on()
+{
+    return (m_players_in_game > 0) ? true : false;    
 }
 
 

@@ -97,6 +97,7 @@ class CardDealer {
     Card draw_card(Deal);
     void deal(Deal& d);
     bool another_card(Deal& d);
+    bool game_on();
 
     // testing/debugging function
     void replace_shoe(std::vector<Card>);     // replace shoe with a hand of your choice
