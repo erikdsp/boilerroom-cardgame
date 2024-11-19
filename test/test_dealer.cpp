@@ -1,5 +1,5 @@
 #define CATCH_CONFIG_MAIN
-#include "Dealer.h"
+#include "../Dealer.h"
 #include "catch.hpp"
 
 SCENARIO ("The dealer deals a card to a destination"){
