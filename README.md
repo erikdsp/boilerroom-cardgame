@@ -9,30 +9,29 @@ This Boiler Room is part of the Software Development education at Chas Academy.
 Participants: *Erik Dahl, Jennifer Gott, Johan Modin, Sabina Stawbrink, Oscar Asserlund*
 
 
-Classes:    /
-Dealer.cpp  /
+Classes:    \
+Dealer.cpp  \
 contains classes Card, Deal, RandomGenerator, Deck, CardDealer
 
-CardEnums.h /
+CardEnums.h \
 contains enums Cards::Suits, Cards::Values
 
 
-Old files with classes: /
-drafts/Deck.cpp
-drafts/Player.cpp
+Old files with classes: \
+drafts/Deck.cpp   \
+drafts/Player.cpp  \
 
 
-Yet to be implemented:  /
-GameRules.cpp   innehåller Dealer, funktioner för input ?
-    GameRules class constructor, input int numberOfPlayers
-        create Dealer, Players
+Yet to be implemented:  \
+GameRules.cpp   innehåller Dealer, funktioner för input ?  \
+    GameRules class constructor, input int numberOfPlayers  \
+        create Dealer, Players  \
+Table.cpp   funktioner för output ?  \
 
-Table.cpp   funktioner för output ?
 
-
-En giv har en pott (som man tar ur börsen)
-Man spelar given tills man antingen vinner eller förlorar given. 
-Då får man en ny fråga.
+En giv har en pott (som man tar ur börsen)  \
+Man spelar given tills man antingen vinner eller förlorar given.  \
+Då får man en ny fråga.  \
 
 Ett spel är tills börsen är slut eller spelaren är nöjd. Betyder att loop för flera spel ligger i GameRules och inte i main.
 
