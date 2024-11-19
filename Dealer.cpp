@@ -23,6 +23,7 @@ Deal::Deal(Card card) : cards{card} {}
 
 Deal& Deal::add_card(Card c){
     cards.push_back(c);
+    if (is_bust) m_playing = false;
     return *this;
 }
 
@@ -66,6 +67,16 @@ bool Deal::is_bust() const
 {
     if (min_value() > 21) return true;
     else return false;
+}
+
+bool Deal::playing() const
+{
+    return m_playing;
+}
+
+void Deal::stand()
+{
+    m_playing = false;
 }
 
 // for testing/debugging
@@ -166,15 +177,53 @@ void CardDealer::replace_shoe(std::vector<Card> cards){
     shoe = Deck{cards};
 }
 
-Deal CardDealer::deal(){
-    return Deal(shoe.draw());
+// Deal CardDealer::deal(){
+//     return Deal(shoe.draw());
+// }
+
+// // todo: evaluate current_deal and 
+// Deal CardDealer::deal(Deal current_deal){
+//     Deal new_deal { current_deal.add_card(shoe.draw()) };
+//     return new_deal;
+// }
+
+Card CardDealer::draw_card(){
+    return shoe.draw();
 }
 
 // todo: evaluate current_deal and 
-Deal CardDealer::deal(Deal current_deal){
-    Deal new_deal { current_deal.add_card(shoe.draw()) };
-    return new_deal;
+Card CardDealer::draw_card(Deal current_deal){
+    // Deal new_deal { current_deal.add_card(shoe.draw()) };
+    // return new_deal;
+    return shoe.draw();
 }
+
+void CardDealer::deal(Deal& d)
+{
+    d.add_card(shoe.draw());        // adds a card to player
+    if (d.is_bust())                // checks if player is bust
+    {
+        d.stand();     
+        m_players_in_game -= 1;
+    }
+}
+
+bool CardDealer::another_card(Deal& d)
+{
+        char y_or_n;
+    std::cin >> y_or_n;     // gör while loop
+    if (y_or_n == 'y')
+    {
+        return true;
+    }
+    else
+    {
+        d.stand();
+        m_players_in_game -= 1;
+        return false;
+    }
+}
+
 
 Deal& operator+= (Deal& lhs, Card& rhs){
     return lhs.add_card(rhs);

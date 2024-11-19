@@ -10,7 +10,7 @@ SCENARIO ("The dealer deals a card to a destination"){
         WHEN("The dealer deals the card") {
             dealer.deal(destination);
             THEN ("There is no card in the shoe and we have dealt a 9 of spades "){
-                CHECK_THROWS(dealer.deal());
+                CHECK_THROWS(dealer.draw_card());
                 REQUIRE(destination.min_value() == 9);
             }
         }
