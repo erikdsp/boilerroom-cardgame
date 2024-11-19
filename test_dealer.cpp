@@ -80,3 +80,25 @@ SCENARIO ("Double down"){
         }
     }
 }
+
+
+SCENARIO ("Hand going bust"){
+    GIVEN ("A card is dealt to a hand"){
+        WHEN ("The minumum value of the hand is above 21"){
+            THEN ("The hand is bust and the position lost"){
+
+            }
+        }
+    }
+}
+
+
+SCENARIO ("Bets settled"){
+    GIVEN ("All positions stand"){
+        WHEN ("A player has a higher value than the house"){
+            THEN ("The position pays out 1.5x"){
+
+            }
+        }
+    }
+}
