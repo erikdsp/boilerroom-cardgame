@@ -162,7 +162,7 @@ CardDealer::CardDealer() :
 
 }
 
-void CardDealer::reshuffle(std::vector<Card> cards){
+void CardDealer::replace_shoe(std::vector<Card> cards){
     shoe = Deck{cards};
 }
 

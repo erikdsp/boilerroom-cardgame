@@ -63,6 +63,9 @@ class Deck{
     void add_standard_deck();
     void add_standard_decks(int num_of_decks);
 
+    // For CardDealer to return cards
+    void add_cards(std::vector<Card>);
+
     // shuffle the current deck held in m_cards
     void shuffle_deck(std::mt19937 gen);
 
@@ -77,14 +80,23 @@ class CardDealer {
     std::vector<Card> discard;  //used cards go here after being collected
 
     public:
+    // constructor for empty CardDealer
     CardDealer();
+    // constructor that adds n standard decks and shuffles them
+    CardDealer(int num_of_decks, std::mt19937 gen);   
 
     // all logic about the game go into the deal functions
     Deal deal();            //
     Deal deal(Deal);
 
-    void reshuffle (std::vector<Card>);     // replace shoe with a deck of your choice
+    // testing/debugging function
+    void replace_shoe(std::vector<Card>);     // replace shoe with a hand of your choice
 
+    // if we go the empty constructor way
+    void add_deck_to_shoe(Deck d);
+
+    // moves discard to shoe using add_cards() then shuffles using shuffle_deck()
+    void shuffle(std::mt19937 gen);
     
     void discard_deal(std::vector<Card>); // takes cards and puts them in discard
 };
