@@ -1,20 +1,19 @@
 #ifndef CHAS_BLACKJACK_DEALER_H
 #define CHAS_BLACKJACK_DEALER_H
 
+#include "CardEnums.h"
 #include <vector>
 #include <random>
+#include <algorithm>
+#include <iostream>
+#include <stack>
+#include <exception>
 
 class Card{
-    private:
-    int m_suit;
-    int m_value;
-
     public:
+    int suit;
+    int value;
     Card(int, int);
-    
-    //public accessible const references to privates
-    const int& suit; 
-    const int& value;
 };
 
 class Deal {
@@ -22,41 +21,56 @@ class Deal {
     std::vector<Card> cards;
 
     public:
-    Deal();
-    Deal(Card);
+    Deal();         // creates an empty deal
+    Deal(Card);     // creates a deal with one card
+                    // do we also want a constructor with a std::vector<Card> ?
 
     Deal& add_card(Card);
 
     //min/max due to aces having two possible values
-    int min_value() const;
-    int max_value() const;
+    int min_value() const;      // evaluates the first ace as 1
+    int max_value() const;      // evaluates the first ace as 11
 
-    int is_bust() const;
+    bool is_bust() const;
+
+    // for testing/debugging
+    std::vector<Card> get_cards();  
 
     // for returning the cards when the deal is finished playing
     std::vector<Card> empty();
 };
 
+class RandomGenerator 
+{
+    public:
+    std::mt19937 m_mt_rand;
+    public:
+    RandomGenerator();          // seeds with std::random_device
+    RandomGenerator(uint32_t seed);  // provide your own seed for deterministic "shuffle"
+};
+
+
 class Deck{
     private:
-    // random number generater for the shuffling
-    std::mt19937 gen;
-
     // container for the cards
-    std::vector<Card> cards;
+    std::vector<Card> m_cards{};
 
     public:
     Deck();
     Deck(std::vector<Card>);
 
-    void shuffle();
-    void shuffle(uint32_t); //deterministic "shuffle"
+    // add the standard 52 cards
+    void add_standard_deck();
+    void add_standard_decks(int num_of_decks);
+
+    // For CardDealer to return cards
+    void add_cards(std::vector<Card>);
+
+    // shuffle the current deck held in m_cards
+    void shuffle_deck(std::mt19937 gen);
 
     // return last card from the deck
     Card draw(); // exception on empty deck
-
-    // for testing
-    void set_seed(uint32_t);
 
 };
 
@@ -66,13 +80,23 @@ class CardDealer {
     std::vector<Card> discard;  //used cards go here after being collected
 
     public:
+    // constructor for empty CardDealer
     CardDealer();
+    // constructor that adds n standard decks and shuffles them
+    CardDealer(int num_of_decks, std::mt19937 gen);   
 
-    Deal deal();
+    // all logic about the game go into the deal functions
+    Deal deal();            //
     Deal deal(Deal);
 
-    void reshuffle (std::vector<Card>);
+    // testing/debugging function
+    void replace_shoe(std::vector<Card>);     // replace shoe with a hand of your choice
 
+    // if we go the empty constructor way
+    void add_deck_to_shoe(Deck d);
+
+    // moves discard to shoe using add_cards() then shuffles using shuffle_deck()
+    void shuffle(std::mt19937 gen);
     
     void discard_deal(std::vector<Card>); // takes cards and puts them in discard
 };
