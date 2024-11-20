@@ -25,7 +25,7 @@ Deal& Deal::add_card(Card c){
     cards.push_back(c);
     // if we use ncurses - call print function here to update screen with new card
     // if we use std::cout maybe also here but print all cards
-    if (is_bust) m_playing = false;
+    // if (is_bust) m_playing = false;
     return *this;
 }
 
@@ -92,7 +92,7 @@ std::vector<Card> Deal::get_cards()
  * Seeds the Mersenne Twister with std::random_device
 */
 RandomGenerator::RandomGenerator()
-    : m_mt_rand{std::random_device{}()} {}
+    : m_rd{}, m_sese{m_rd(), m_rd()}, m_mt_rand{std::random_device{}()} {}
 
 /** 
  * Seeds the Mersenne Twister with a seed of your choice

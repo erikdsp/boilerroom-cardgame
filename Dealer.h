@@ -47,6 +47,8 @@ class Deal {
 class RandomGenerator 
 {
     public:
+    std::random_device m_rd;
+    std::seed_seq m_sese;
     std::mt19937 m_mt_rand;
     public:
     RandomGenerator();          // seeds with std::random_device

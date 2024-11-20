@@ -7,6 +7,7 @@
 int main()
 {
 RandomGenerator gen{};
+
 CardDealer bj_dealer{};
 
 Deal player1{};
