@@ -25,6 +25,12 @@ namespace Cards
         QUEEN,
         KING
     };
+
+    enum Cardholder {
+        DEALER = -1,
+        DISCARD = -2
+    };
+
 }
 
 #endif
