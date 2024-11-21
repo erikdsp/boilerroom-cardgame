@@ -18,14 +18,41 @@ class Card{
 
 class Player {
     private:
-    double m_purse;
     std::string m_name;
-    int m_id;
+    double m_purse;
+    double current_bid{};
+    int m_id;               // 0 means not playing, >= 1 means playing
     public:
     Player();
-    Player(double purse, std::string name, int id);
+    Player(std::string name, int id = 0, double purse = 1000);
     int get_id();
     std::string get_name();
+};
+
+class Deck{
+    private:
+    // container for the cards
+    // a card contains info about who holds it
+    std::vector<Card> m_cards{};
+
+    public:
+    Deck();
+    Deck(int num_of_decks, std::mt19937 gen);
+    Deck(std::vector<Card>);
+
+    // add the standard 52 cards
+    void add_standard_deck();
+    void add_standard_decks(int num_of_decks);
+
+    // For CardDealer to return cards
+    void add_cards(std::vector<Card>);
+
+    // shuffle the current deck held in m_cards
+    void shuffle_deck(std::mt19937 gen);
+
+    // give a card a player id
+    void draw_card(int id); // exception on empty deck?
+
 };
 
 class Deal {
@@ -68,29 +95,7 @@ class RandomGenerator
 };
 
 
-class Deck{
-    private:
-    // container for the cards
-    std::vector<Card> m_cards{};
 
-    public:
-    Deck();
-    Deck(std::vector<Card>);
-
-    // add the standard 52 cards
-    void add_standard_deck();
-    void add_standard_decks(int num_of_decks);
-
-    // For CardDealer to return cards
-    void add_cards(std::vector<Card>);
-
-    // shuffle the current deck held in m_cards
-    void shuffle_deck(std::mt19937 gen);
-
-    // return last card from the deck
-    Card draw(); // exception on empty deck
-
-};
 
 
 #endif
