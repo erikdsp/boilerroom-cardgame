@@ -61,34 +61,6 @@ class BlackjackDeck : public Deck
 };
 
 
-class Deal {
-    private:
-    std::vector<Card> cards;
-    bool m_playing{true};
-
-    public:
-    Deal();         // creates an empty deal
-    Deal(Card);     // creates a deal with one card
-                    // do we also want a constructor with a std::vector<Card> ?
-
-    Deal& add_card(Card);
-    Deal get_deal();
-
-    //min/max due to aces having two possible values
-    int min_value() const;      // evaluates the first ace as 1
-    int max_value() const;      // evaluates the first ace as 11
-
-    bool is_bust() const;
-    bool playing() const;
-    void stand();
-
-    // for testing/debugging
-    std::vector<Card> get_cards();  
-
-    // for returning the cards when the deal is finished playing
-    std::vector<Card> empty();
-};
-
 class RandomGenerator 
 {
     public:
