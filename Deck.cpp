@@ -12,10 +12,6 @@ Card::Card(int s, int v, int c_h = CardHolder::DECK )
  * -- PLAYER --
 */
 
-
-
-
-
 Player::Player()
     : m_name { "Anonymous" }, m_id { 0 }, m_purse { 1000 } {}
 
@@ -42,15 +38,35 @@ void Player::change_name(std::string name)
 /** 
  * -- DECK --
 */
+
 Deck::Deck() {}
 
-Deck::Deck(std::vector<Card> in) : 
-    m_cards {in} {}
+/**  
+ * Constructor adds n standard 52 cards and shuffles the deck
+ * @param num_of_decks  number of decks to add
+ * @param gen           a random generator, e.g. Mersenne Twister
+ */
+Deck::Deck(int num_of_decks, std::mt19937 gen)
+    : m_cards{} 
+{
+    add_standard_decks(num_of_decks);
+    shuffle_deck(gen);
+}
+
+/**  
+ * Constructor for debugging - adds cards of your choice
+ * @param cards         vector of cards
+ */
+
+Deck::Deck(std::vector<Card> cards) 
+    : m_cards { cards } {}
+
 
 
 /**  
  * Adds the standard 52 cards to the deck
  */
+
 void Deck::add_standard_deck()
 {
     for (int i = 0 ; i < 52 ; ++i)
@@ -87,7 +103,21 @@ void Deck::shuffle_deck(std::mt19937 r)
     std::ranges::shuffle(m_cards, r);
 }
 
-// void Deck::shuffle(uint32_t) {}
+
+/** 
+ * -- BLACKJACK DECK --
+*/
+
+BlackjackDeck::BlackjackDeck() 
+    : Deck(){}
+
+BlackjackDeck::BlackjackDeck(int num_of_decks, std::mt19937 gen)
+    : Deck(num_of_decks, gen) {}
+
+BlackjackDeck::BlackjackDeck(std::vector<Card> cards)
+    : Deck(cards) {}
+
+
 
 /** 
  * Draw the last card from the deck and remove it from m_cards

@@ -36,12 +36,12 @@ class Player {
 class Deck{
     protected:
     // container for the cards, a card contains info about who holds it
-    std::vector<Card> m_cards{};
+    std::vector<Card> m_cards;
 
     public:
     Deck();
     Deck(int num_of_decks, std::mt19937 gen);
-    Deck(std::vector<Card>);
+    Deck(std::vector<Card> cards);                // for debugging only
 
     // add the standard 52 cards
     void add_standard_deck();
@@ -54,6 +54,10 @@ class Deck{
 
 class BlackjackDeck : public Deck
 {
+    public:
+    BlackjackDeck();
+    BlackjackDeck(int num_of_decks, std::mt19937 gen);
+    BlackjackDeck(std::vector<Card> cards);       // for debugging only
     public:
     // give a card a player id
     void draw_card(int id); // exception on empty deck?
