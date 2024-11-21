@@ -138,16 +138,18 @@ void BlackjackDeck::draw_card(int id){
 int BlackjackDeck::min_value(int player_id) const{
     int sum {};
 
-    // OBS - FUNKAR INTE ÄN
-    // needs to loop through deck each time and check card_holder
-    // can likely break when card_holder == 0
     for ( auto c : m_cards) {
-        if ( c.value == Cards::ACE ){
-            sum += 1;
-        } else if ( c.value > 10 ) {
-            sum += 10;
-        } else {
+        // loop can end when we reach first DECK card
+        if ( c.card_holder == CardHolder::DECK ) break;        
+        if ( c.card_holder == player_id )
+        {
+            if ( c.value == Cards::ACE ){
+                sum += 1;
+            } else if ( c.value > 10 ) {
+                sum += 10;
+            } else { 
             sum += c.value;
+            }
         }
     }
 
@@ -155,22 +157,24 @@ int BlackjackDeck::min_value(int player_id) const{
 }
 
 int BlackjackDeck::max_value(int player_id) const{
-    int sum {};
+    int sum{ 0 };
 
-    // OBS - FUNKAR INTE ÄN
-    // needs to loop through deck each time and check card_holder
-    // can likely break when card_holder == 0
+    bool counted_one_ace{ false };
     for ( auto c : m_cards) {
-        bool counted_one_ace{false};
-        if ( c.value == Cards::ACE && counted_one_ace ){
-            sum += 1;
-        } else if ( c.value == Cards::ACE ){
-            sum += 11;
-            counted_one_ace = true;
-        } else if ( c.value > 10 ) {
-            sum += 10;
-        } else {
-            sum += c.value;
+        // loop can end when we reach first DECK card
+        if ( c.card_holder == CardHolder::DECK ) break;  
+        if ( c.card_holder == player_id )
+        {
+            if ( c.value == Cards::ACE && counted_one_ace ){
+                sum += 1;
+            } else if ( c.value == Cards::ACE ){
+                sum += 11;
+                counted_one_ace = true;
+            } else if ( c.value > 10 ) {
+                sum += 10;
+            } else {
+                sum += c.value;
+            }
         }
     }
     
