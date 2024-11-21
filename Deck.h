@@ -28,6 +28,9 @@ class Player {
     Player(std::string name, int id = 0, double purse = 1000);
     int get_id();
     std::string get_name();
+    void change_name(std::string name);
+    // bid(double amount) needs function to bid - that calls find_id_and_enter_game()
+    // find_id_and_enter_game() needs function to enter game i.e. get the next free id
 };
 
 class Deck{

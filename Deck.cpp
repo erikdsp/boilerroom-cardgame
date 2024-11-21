@@ -8,6 +8,36 @@ Card::Card(int s, int v, int c_h = CardHolder::DECK )
 : suit{ s }, value{ v }, card_holder { c_h } {}
 
 
+/** 
+ * -- PLAYER --
+*/
+
+
+
+
+
+Player::Player()
+    : m_name { "Anonymous" }, m_id { 0 }, m_purse { 1000 } {}
+
+Player::Player(std::string name, int id, double purse)
+    : m_name { name }, m_id { id }, m_purse { purse } {}
+
+int Player::get_id()
+{
+    return m_id;
+}
+
+std::string Player::get_name()
+{
+    return m_name;
+}
+
+void Player::change_name(std::string name)
+{
+    m_name = name;
+}
+
+
 
 /** 
  * -- DECK --
