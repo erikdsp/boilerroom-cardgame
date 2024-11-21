@@ -28,7 +28,9 @@ class Player {
     Player(std::string name, int id = 0, double purse = 1000);
     int get_id();
     std::string get_name();
+    bool is_playing();
     void change_name(std::string name);
+    void set_id(int id);   // testing only
     // bid(double amount) needs function to bid - that calls find_id_and_enter_game()
     // find_id_and_enter_game() needs function to enter game i.e. get the next free id
 };
@@ -66,7 +68,10 @@ class BlackjackDeck : public Deck
     int min_value(int player_id) const;      // evaluates the first ace as 1
     int max_value(int player_id) const;      // evaluates the first ace as 11
     bool is_bust(int player_id) const;
-    void clear_the_table();
+    // move all played cards to discard
+    // check if available cards < 50 then reshuffle
+    void clear_the_table(std::mt19937 gen);         
+    
 };
 
 

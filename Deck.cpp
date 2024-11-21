@@ -28,11 +28,21 @@ std::string Player::get_name()
     return m_name;
 }
 
+bool Player::is_playing()
+{
+    return m_playing;
+}
+
 void Player::change_name(std::string name)
 {
     m_name = name;
 }
 
+// function for testing only
+void Player::set_id(int id)
+{
+    m_id = id;
+}
 
 
 /** 
