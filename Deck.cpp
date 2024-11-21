@@ -187,15 +187,17 @@ bool BlackjackDeck::is_bust(int player_id) const
 
 /** 
  * -- RANDOM GENERATOR --
- * Seeds the Mersenne Twister with std::random_device
+ * Seeds the Mersenne Twister with a seed sequence with 8 std::random_device
 */
 RandomGenerator::RandomGenerator()
-    : m_rd{}, m_sese{m_rd(), m_rd()}, m_mt_rand{std::random_device{}()} {}
+    : m_rd{}, 
+      m_sese{ m_rd(), m_rd(), m_rd(), m_rd(), m_rd(), m_rd(), m_rd(), m_rd() }, 
+      m_mt_rand{ std::random_device{}() } {}
 
 /** 
  * Seeds the Mersenne Twister with a seed of your choice
 */
 RandomGenerator::RandomGenerator(uint32_t seed)
-    : m_mt_rand{seed} {}
+    : m_mt_rand{ seed } {}
 
 
