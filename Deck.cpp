@@ -120,17 +120,26 @@ BlackjackDeck::BlackjackDeck(std::vector<Card> cards)
 
 
 /** 
- * Draw the last card from the deck and remove it from m_cards
- * @return Card
+ * Find the first DECK card 
+ * and assign it to player/dealer id
+ * @param id 
 */
 void BlackjackDeck::draw_card(int id){
-    if (m_cards.size() == 0)
+    bool card_was_drawn{ false };
+    for ( auto c : m_cards)
     {
-        throw std::out_of_range("Trying to draw card from empty vector");
+        if ( c.card_holder == CardHolder::DECK )
+        {
+            c.card_holder = id; 
+            card_was_drawn = true;
+        }
     }
-    // Card tmp = m_cards.back();      
-    // m_cards.pop_back();             
-    // return tmp;
+
+    if (!card_was_drawn)
+    {
+        throw std::out_of_range(" Error: Deck not shuffled in time. No cards left with card_holder == CardHolder::DECK ");
+    }
+
 }
 
 
