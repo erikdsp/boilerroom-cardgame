@@ -63,7 +63,7 @@ void Deck::shuffle_deck(std::mt19937 r)
  * Draw the last card from the deck and remove it from m_cards
  * @return Card
 */
-void Deck::draw_card(int id){
+void BlackjackDeck::draw_card(int id){
     if (m_cards.size() == 0)
     {
         throw std::out_of_range("Trying to draw card from empty vector");
@@ -72,6 +72,57 @@ void Deck::draw_card(int id){
     // m_cards.pop_back();             
     // return tmp;
 }
+
+
+
+int BlackjackDeck::min_value(int player_id) const{
+    int sum {};
+
+    // OBS - FUNKAR INTE ÄN
+    // needs to loop through deck each time and check card_holder
+    // can likely break when card_holder == 0
+    for ( auto c : m_cards) {
+        if ( c.value == Cards::ACE ){
+            sum += 1;
+        } else if ( c.value > 10 ) {
+            sum += 10;
+        } else {
+            sum += c.value;
+        }
+    }
+
+    return sum;
+}
+
+int BlackjackDeck::max_value(int player_id) const{
+    int sum {};
+
+    // OBS - FUNKAR INTE ÄN
+    // needs to loop through deck each time and check card_holder
+    // can likely break when card_holder == 0
+    for ( auto c : m_cards) {
+        bool counted_one_ace{false};
+        if ( c.value == Cards::ACE && counted_one_ace ){
+            sum += 1;
+        } else if ( c.value == Cards::ACE ){
+            sum += 11;
+            counted_one_ace = true;
+        } else if ( c.value > 10 ) {
+            sum += 10;
+        } else {
+            sum += c.value;
+        }
+    }
+    
+    return sum;
+}
+
+bool BlackjackDeck::is_bust(int player_id) const
+{
+    if (min_value(player_id) > 21) return true;
+    else return false;
+}
+
 
 
 /** 
@@ -110,47 +161,8 @@ Deal& Deal::add_card(Card c){
     return *this;
 }
 
-int Deal::min_value() const{
-    int sum {};
 
-    for ( auto c : cards) {
-        if ( c.value == Cards::ACE ){
-            sum += 1;
-        } else if ( c.value > 10 ) {
-            sum += 10;
-        } else {
-            sum += c.value;
-        }
-    }
 
-    return sum;
-}
-
-int Deal::max_value() const{
-    int sum {};
-
-    for ( auto c : cards) {
-        bool counted_one_ace{false};
-        if ( c.value == Cards::ACE && counted_one_ace ){
-            sum += 1;
-        } else if ( c.value == Cards::ACE ){
-            sum += 11;
-            counted_one_ace = true;
-        } else if ( c.value > 10 ) {
-            sum += 10;
-        } else {
-            sum += c.value;
-        }
-    }
-    
-    return sum;
-}
-
-bool Deal::is_bust() const
-{
-    if (min_value() > 21) return true;
-    else return false;
-}
 
 bool Deal::playing() const
 {

@@ -21,6 +21,7 @@ class Player {
     std::string m_name;
     double m_purse;
     double current_bid{};
+    bool m_playing{true};
     int m_id;               // 0 means not playing, >= 1 means playing
     public:
     Player();
@@ -30,9 +31,8 @@ class Player {
 };
 
 class Deck{
-    private:
-    // container for the cards
-    // a card contains info about who holds it
+    protected:
+    // container for the cards, a card contains info about who holds it
     std::vector<Card> m_cards{};
 
     public:
@@ -44,16 +44,22 @@ class Deck{
     void add_standard_deck();
     void add_standard_decks(int num_of_decks);
 
-    // For CardDealer to return cards
-    void add_cards(std::vector<Card>);
-
     // shuffle the current deck held in m_cards
     void shuffle_deck(std::mt19937 gen);
 
+};
+
+class BlackjackDeck : public Deck
+{
+    public:
     // give a card a player id
     void draw_card(int id); // exception on empty deck?
-
+    int min_value(int player_id) const;      // evaluates the first ace as 1
+    int max_value(int player_id) const;      // evaluates the first ace as 11
+    bool is_bust(int player_id) const;
+    void clear_the_table();
 };
+
 
 class Deal {
     private:
