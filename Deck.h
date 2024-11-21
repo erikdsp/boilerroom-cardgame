@@ -12,7 +12,20 @@ class Card{
     public:
     int suit;
     int value;
-    Card(int, int);
+    int card_holder;
+    Card(int s, int v, int c_h);
+};
+
+class Player {
+    private:
+    double m_purse;
+    std::string m_name;
+    int m_id;
+    public:
+    Player();
+    Player(double purse, std::string name, int id);
+    int get_id();
+    std::string get_name();
 };
 
 class Deal {

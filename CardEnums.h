@@ -26,11 +26,16 @@ namespace Cards
         KING
     };
 
-    enum Cardholder {
+}
+
+namespace CardHolder
+{
+    enum HolderOfCard {
+        DECK = 0,
         DEALER = -1,
         DISCARD = -2
     };
-
 }
+
 
 #endif

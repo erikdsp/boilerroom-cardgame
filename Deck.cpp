@@ -4,8 +4,8 @@
  -- CARD --
 */
 
-Card::Card(int suit_in, int value_in) 
-: suit{ suit_in }, value{ value_in } {}
+Card::Card(int s, int v, int c_h = CardHolder::DECK ) 
+: suit{ s }, value{ v }, card_holder { c_h } {}
 
 
 /*
