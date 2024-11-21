@@ -41,6 +41,13 @@ void Player::change_name(std::string name)
 
 Deck::Deck() {}
 
+Deck::Deck(int num_of_decks)
+    : m_cards{} 
+{
+    add_standard_decks(num_of_decks);
+}
+
+
 /**  
  * Constructor adds n standard 52 cards and shuffles the deck
  * @param num_of_decks  number of decks to add
@@ -93,6 +100,23 @@ void Deck::add_standard_decks(int num_of_decks)
         std::cerr << "Trying to add 0 or negative number of decks\n";
     }
 }
+
+// testing
+int Deck::print_cards()
+{
+    int count{0};
+    for (auto card : m_cards)
+    {
+        std::cout << card.value << " " << card.suit << "\t";
+        ++count;
+        if (count%13 == 0)  
+        {
+            std::cout << "\n";
+        }
+    }
+    return count;
+}
+
 
 /**  
  * Shuffles the deck held in m_cards

@@ -40,6 +40,7 @@ class Deck{
 
     public:
     Deck();
+    Deck(int num_of_decks);
     Deck(int num_of_decks, std::mt19937 gen);
     Deck(std::vector<Card> cards);                // for debugging only
 
@@ -47,6 +48,7 @@ class Deck{
     void add_standard_deck();
     void add_standard_decks(int num_of_decks);
 
+    int print_cards(); // testing
     // shuffle the current deck held in m_cards
     void shuffle_deck(std::mt19937 gen);
 
@@ -70,9 +72,10 @@ class BlackjackDeck : public Deck
 
 class RandomGenerator 
 {
-    public:
+    private:
     std::random_device m_rd;
     std::seed_seq m_sese;
+    public:
     std::mt19937 m_mt_rand;
     public:
     RandomGenerator();          // seeds with std::random_device

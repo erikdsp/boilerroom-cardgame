@@ -7,6 +7,9 @@ int main()
 
 // Don't need to be a class. But maybe can be for now
 RandomGenerator gen{};
+BlackjackDeck deck{ 6 , gen.m_mt_rand };
+// deck.add_standard_deck();
+deck.print_cards();
 
 /**
  * TODO: Implement Card Dealer in main 
