@@ -4,7 +4,7 @@
  -- CARD --
 */
 
-Card::Card(int s, int v, int c_h = CardHolder::DECK ) 
+Card::Card(int s, int v, int c_h ) 
 : suit{ s }, value{ v }, card_holder { c_h } {}
 
 
@@ -239,7 +239,7 @@ bool BlackjackDeck::is_bust(int player_id) const
 RandomGenerator::RandomGenerator()
     : m_rd{}, 
       m_sese{ m_rd(), m_rd(), m_rd(), m_rd(), m_rd(), m_rd(), m_rd(), m_rd() }, 
-      m_mt_rand{ std::random_device{}() } {}
+      m_mt_rand{ m_sese } {}
 
 /** 
  * Seeds the Mersenne Twister with a seed of your choice

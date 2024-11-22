@@ -13,7 +13,7 @@ class Card{
     int suit;
     int value;
     int card_holder;
-    Card(int s, int v, int c_h);
+    Card(int s, int v, int c_h = CardHolder::DECK);
 };
 
 class Player {
@@ -46,7 +46,7 @@ class Deck{
     Deck(int num_of_decks, std::mt19937 gen);
     Deck(std::vector<Card> cards);                // for debugging only
 
-    // add the standard 52 cards
+    // add the standard 52 cards        // make this private or protected
     void add_standard_deck();
     void add_standard_decks(int num_of_decks);
 

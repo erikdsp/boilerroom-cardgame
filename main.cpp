@@ -5,6 +5,10 @@
 int main()
 {
 
+    // std::random_device rd;
+    // std::seed_seq ss { rd() };
+    // std::mt19937 mt_rand{ ss };
+
 // Don't need to be a class. But maybe can be for now
 RandomGenerator gen{};
 BlackjackDeck deck{ 6 , gen.m_mt_rand };
