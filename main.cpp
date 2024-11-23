@@ -13,7 +13,7 @@ int main()
 RandomGenerator gen{};
 BlackjackDeck deck{ 6 , gen.m_mt_rand };
 // deck.add_standard_deck();
-// deck.print_cards();
+deck.print_cards();
 
 std::vector<Player> players {{"Player 1" , 1}, {"Player 2" , 2}};
 

@@ -83,12 +83,13 @@ Deck::Deck(std::vector<Card> cards)
 /**  
  * Adds the standard 52 cards to the deck
  */
-
 void Deck::add_standard_deck()
 {
     for (int i = 0 ; i < 52 ; ++i)
     {
-       m_cards.push_back({(i/13)+1,(i%13)+1});   
+        int suit = (i/13)+1;    // gives values in the range 1-4
+        int value = (i%13)+1;   // gives values in the range 1-13
+        m_cards.push_back( { suit, value } );   
     }
 }
 
@@ -130,11 +131,14 @@ int Deck::print_cards()
 
 /**  
  * Shuffles the deck held in m_cards
+ * The std::ranges library contains a shuffle function, requires C++20
+ * For C++11 compilers see commented out std::shuffle
  * @param r random generator
  */
 void Deck::shuffle_deck(std::mt19937 r)
 {
-    std::ranges::shuffle(m_cards, r);
+    // std::shuffle(m_cards.begin(), m_cards.end(), r);     // For C++11 compilers
+    std::ranges::shuffle(m_cards, r);                       // C++20
 }
 
 
@@ -160,12 +164,14 @@ BlackjackDeck::BlackjackDeck(std::vector<Card> cards)
 */
 void BlackjackDeck::draw_card(int id){
     bool card_was_drawn{ false };
+    // loop through vector of cards
     for ( auto c : m_cards)
     {
         if ( c.card_holder == CardHolder::DECK )
         {
             c.card_holder = id; 
             card_was_drawn = true;
+            break;            // end loop after card is drawn
         }
     }
 
@@ -176,14 +182,19 @@ void BlackjackDeck::draw_card(int id){
 
 }
 
-
-
+/**
+ * Calculates the min value of a players hand
+ * Evaluates all ACES as 1
+ * @param player_id
+ */
 int BlackjackDeck::min_value(int player_id) const{
-    int sum {};
+    int sum {0};
 
+    // loop through vector of cards
     for ( auto c : m_cards) {
         // loop can end when we reach first DECK card
         if ( c.card_holder == CardHolder::DECK ) break;        
+        // if card matches id perform calculation
         if ( c.card_holder == player_id )
         {
             if ( c.value == Cards::ACE ){
@@ -199,13 +210,21 @@ int BlackjackDeck::min_value(int player_id) const{
     return sum;
 }
 
+
+/**
+ * Calculates the max value of a players hand (the highest meaningful value)
+ * Evaluates the first ACE as 11 and subsequent ACES as 1
+ * @param player_id
+ */
 int BlackjackDeck::max_value(int player_id) const{
     int sum{ 0 };
 
     bool counted_one_ace{ false };
+    // loop through vector of cards
     for ( auto c : m_cards) {
         // loop can end when we reach first DECK card
         if ( c.card_holder == CardHolder::DECK ) break;  
+        // if card matches id perform calculation
         if ( c.card_holder == player_id )
         {
             if ( c.value == Cards::ACE && counted_one_ace ){
