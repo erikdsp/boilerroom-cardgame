@@ -37,9 +37,13 @@ class Player {
     int get_id();
     std::string get_name();
     bool is_playing();
-    void enter_bid(int& nxt_id);            // input function
-    void hit_or_stand();                    // input function
+    void enter_bid(int& nxt_id);            // input/output function
+    void hit_or_stand();                    // input/output function
+    void score_round(BlackjackOutcome outcome);
+    private:
+    void print_outcome(int amount);         // output function, called by score_round()
     // additional and testing functions:
+    public:
     void change_name(std::string name);
     void set_id(int id);                // testing
     // bid(double amount) needs function to bid - that calls find_id_and_enter_game()
@@ -91,6 +95,8 @@ class BlackjackDeck : public Deck
     int min_value(int player_id) const;      // evaluates the first ace as 1
     int max_value(int player_id) const;      // evaluates the first ace as 11
     bool is_bust(int player_id) const;
+    void print_cards(int player_id) const;      // output function
+    BlackjackOutcome calculate_win(int player_id) const;
     // move all played cards to discard
     // check if available cards < 50 then reshuffle
     void clear_the_table(std::mt19937 gen);         
