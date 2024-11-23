@@ -58,6 +58,7 @@ std::vector<Player> players {{"Player 1" , 1}, {"Player 2" , 2}};
 //     Rule: if total >= 17 stand (counting ace as 11)
 // if max_value >= 17 && max_value <= 21 stand  - check ACE as 11 
 // else if min_value >= 17                      - check ACE as 1
+// output: show new cards (until done)
 // -- CALCULATE WINNER --
 // loop players - if player is bust, bid lost       (current_bid = 0)
 // if dealer is bust - standing players adds bid    (purse += current_bid * 2, current_bid = 0)
@@ -65,11 +66,14 @@ std::vector<Player> players {{"Player 1" , 1}, {"Player 2" , 2}};
 // if player < dealer nothing                       (current_bid = 0)
 // if player == dealer, bid is returned             (purse += current_bid, current_bid = 0)
 // loop through players, adjust current_bid, purse
+// output: outcome of game
 // -- CLEAR THE TABLE --
 // clear_the_table(), sets all used cards to CardHolder::DISCARD
 // clear_the_table also checks if remaining CardHolder::DECK < 50 (assuming 6 cards in deck)
 // and then reshuffles deck 
 // -- PLAY ANOTHER ROUND --
+// output: prompt
+// input: y or n
 
 
 /**   

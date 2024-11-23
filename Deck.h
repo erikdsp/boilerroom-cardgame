@@ -8,16 +8,22 @@
 #include <iostream>
 #include <exception>
 
+/** Card 
+ * MEMBERS: suit, value, card_holder
+ * @note card_holder values above 1 are players, other values defined in CardEnums.h
+ */
 class Card{
     public:
     int suit;
     int value;
-    // id of who is currently holding the card
-    // values above 1 is players, other values defined in CardEnums.h
     int card_holder;        
     Card(int s, int v, int c_h = CardHolder::DECK);
 };
 
+/** Player 
+ * Class holding information about a player including the current round
+ * 
+ */
 class Player {
     private:
     std::string m_name;
@@ -37,6 +43,12 @@ class Player {
     // find_id_and_enter_game() needs function to enter game i.e. get the next free id
 };
 
+
+/** Deck 
+ * container for cards with basic funcions 
+ * function that fills the deck with standard cards
+ * function to shuffle deck
+ */
 class Deck{
     protected:
     // container for the cards, a card contains info about who holds it
@@ -60,6 +72,10 @@ class Deck{
 
 };
 
+/** BlackjackDeck 
+ * extends Deck with functions specific to Black Jack
+ * draw_card, min_value, max_value, is_bust, clear_the_table
+ */
 class BlackjackDeck : public Deck
 {
     public:
@@ -79,6 +95,9 @@ class BlackjackDeck : public Deck
 };
 
 
+/** RandomGenerator 
+ * constructor seeds a Mersenne Twister with at sequence of std::random_device values
+ */
 class RandomGenerator 
 {
     private:
