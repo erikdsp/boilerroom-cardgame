@@ -1,66 +1,55 @@
-#include <algorithm>
-#include <numeric>
 #include <iostream>
 #include "Player.h"
 
-Deal::Deal(Player& player) : 
-    player{player} {
+Player::Player() : purse{200}, name{}{
+    std::cout << "Enter your name: ";
+    std::cin >> name;
+}
+
+Player::Player(std::string name_in, double initial) :
+    name{std::move(name_in)}, purse{initial}{
 
 }
 
-Deal::Deal(Player& player, Card& card) :
-    player{player},
-    cards{std::move(card)}
-{
-
+double Player::debit(double amount){
+    if( purse < amount ){
+        throw std::runtime_error("Not enough funds");
+    }
+    purse -= amount;
+    return amount;
 }
 
-int Deal::sum() const{
-    int sum = std::accumulate(cards.begin(), cards.end(), int{0});
-    return sum;
+void Player::credit(double amount){
+    purse += amount;
 }
 
-void Deal::add_card( Card& card ){
-    cards.emplace_back(std::move(card));
+bool Player::can_pay(double amount) const {
+    return purse >= amount;
 }
 
-bool Deal::play() const{
-    return this->player.hit_or_stand();
+bool Player::surrender(){
+    char selection {};
+    std::cout   << "Do you wish to surrender this bid?" << '\n' 
+                << "You will be credited half your bet." << '\n'
+                << "y/n -> ";
+    std::cin    >> selection;
+    return selection == 'y';
 }
 
-
-Player::Player() :
-    name {"Guest"}, purse {200.0} {
+bool Player::split(){
+    char selection {};
+    std::cout   << "Do you wish to split this deal?" << '\n' 
+                << "You will need to pay the same bid for the second deal." << '\n'
+                << "y/n -> ";
+    std::cin    >> selection;
+    return selection == 'y';
 }
 
-Player::Player(std::string name, double buyin) : 
-    name{std::move(name)}, 
-    purse{buyin} {
-
-}
-
-double Player::bid(double min, double max) {
-    double input {};
-    
-    do
-    {
-        std::cin >> input;
-    } while ( input > purse || input < min );
-
-}
-
-bool Player::hit_or_stand() const {
-    bool input {};
-
-    enum Choices {
-        STAND,
-        HIT
-    };
-
-    do
-    {
-        std::cin >> input;
-    } while ( input == STAND || input == HIT );
-
-    return input;
+bool Player::double_down(){
+    char selection {};
+    std::cout   << "Do you wish to double down?" << '\n' 
+                << "You will double your bet but only get one more card." << '\n'
+                << "y/n -> ";
+    std::cin    >> selection;
+    return selection == 'y';
 }

@@ -3,6 +3,8 @@
 
 #include <vector>
 #include <random>
+#include <ranges>
+#include <algorithm>
 
 class Card{
     private:
@@ -10,11 +12,10 @@ class Card{
     int m_value;
 
     public:
-    Card(int, int);
+    Card(int s, int v) : m_suit{s}, m_value{v}{}
     
-    //public accessible const references to privates
-    const int& suit; 
-    const int& value;
+    int suit() const { return m_suit; }
+    int value() const { return m_value; }
 };
 
 class Deal {
@@ -25,13 +26,17 @@ class Deal {
     Deal();
     Deal(Card);
 
-    Deal& add_card(Card);
+    void add_card(Card);
+    Deal split();
 
     //min/max due to aces having two possible values
     int min_value() const;
     int max_value() const;
 
-    int is_bust() const;
+    bool is_bust() const;
+    bool stands() const;
+    int size() const;
+    bool splittable() const;
 
     // for returning the cards when the deal is finished playing
     std::vector<Card> empty();
@@ -49,8 +54,12 @@ class Deck{
     Deck();
     Deck(std::vector<Card>);
 
+    void add_cards(std::vector<Card>);
+
     void shuffle();
     void shuffle(uint32_t); //deterministic "shuffle"
+
+    int size() const;
 
     // return last card from the deck
     Card draw(); // exception on empty deck
@@ -68,12 +77,12 @@ class CardDealer {
     public:
     CardDealer();
 
-    Deal deal();
-    Deal deal(Deal);
+    void deal(Deal&);
 
     void reshuffle (std::vector<Card>);
 
-    
+    int discard_size() const;
+
     void discard_deal(std::vector<Card>); // takes cards and puts them in discard
 };
 
