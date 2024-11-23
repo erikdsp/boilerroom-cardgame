@@ -12,7 +12,9 @@ class Card{
     public:
     int suit;
     int value;
-    int card_holder;
+    // id of who is currently holding the card
+    // values above 1 is players, other values defined in CardEnums.h
+    int card_holder;        
     Card(int s, int v, int c_h = CardHolder::DECK);
 };
 
@@ -46,10 +48,12 @@ class Deck{
     Deck(int num_of_decks, std::mt19937 gen);
     Deck(std::vector<Card> cards);                // for debugging only
 
+    private:
     // add the standard 52 cards        // make this private or protected
     void add_standard_deck();
     void add_standard_decks(int num_of_decks);
 
+    public:
     int print_cards(); // testing
     // shuffle the current deck held in m_cards
     void shuffle_deck(std::mt19937 gen);
