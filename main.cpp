@@ -45,6 +45,7 @@ std::vector<Player> players {{"Player 1" , 1}, {"Player 2" , 2}};
 // -- DEALING CARDS --
 // loop 2 times - draw_card for each player, then dealer
 // display function for dealer, only shows 1 card
+// if a player has a natural. DOES DEALER SHOW HAND TO ALL PLAYERS?
 // output: print cards
 // -- HIT OR STAND --
 // loop until all players is_playing() return false

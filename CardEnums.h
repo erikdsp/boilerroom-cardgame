@@ -37,5 +37,10 @@ namespace CardHolder
     };
 }
 
+enum class BlackjackOutcome {
+        NATURAL = 1,
+        WINNER,
+        BUST
+};
 
 #endif

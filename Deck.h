@@ -37,8 +37,11 @@ class Player {
     int get_id();
     std::string get_name();
     bool is_playing();
+    void enter_bid(int& nxt_id);            // input function
+    void hit_or_stand();                    // input function
+    // additional and testing functions:
     void change_name(std::string name);
-    void set_id(int id);   // testing only
+    void set_id(int id);                // testing
     // bid(double amount) needs function to bid - that calls find_id_and_enter_game()
     // find_id_and_enter_game() needs function to enter game i.e. get the next free id
 };
