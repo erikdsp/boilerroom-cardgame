@@ -33,6 +33,38 @@ bool Player::is_playing()
     return m_playing;
 }
 
+// input/output function, to be called from main
+void Player::enter_bid(int& nxt_id)
+{
+    // output: prompt
+    // input: bid
+    // if (m_purse > bid) {m_current_bid = bid, m_purse -= bid}
+    std::cout << m_name << " called enter_bid() with nxt_id " << nxt_id << "\n";
+
+}  
+
+// input/output function, to be called from main
+bool Player::hit_or_stand()
+{
+    // output: prompt
+    // input: h or s
+    std::cout << m_name << " called hit_or_stand()\n";
+    return false;       // returns true on hit
+}
+
+// update each player with outcome from BlackjackDeck::calculate_win()
+void Player::score_round(BlackjackOutcome outcome)
+{
+    std::cout << m_name << " called score_round() with outcome " << static_cast<int>(outcome) << " (cast to int) \n";
+}
+
+// output function, to be called by score_round()
+void Player::print_outcome(int amount)
+{
+    std::cout << "print_outcome() called with amount " << amount << "\n";
+}
+
+// function for testing. Maybe useful later if we have a menu system
 void Player::change_name(std::string name)
 {
     m_name = name;
@@ -248,6 +280,28 @@ bool BlackjackDeck::is_bust(int player_id) const
     if (min_value(player_id) > 21) return true;
     else return false;
 }
+
+// output function, print the hand of player_id
+void BlackjackDeck::print_cards(int player_id, bool game_is_on) const
+{
+    // if player print all cards
+    // if dealer && game_is_on print 1 front 1 back
+    // if dealer && !game_is_on print all cards
+    // else print error
+}      
+
+// check player against dealer and return NATURAL, WINNER or BUST
+BlackjackOutcome BlackjackDeck::calculate_win(int player_id) const
+{
+    return BlackjackOutcome::BUST;      // dummy
+}
+
+// function to prepare deck for next round
+void BlackjackDeck::clear_the_table(std::mt19937 gen)
+{
+    // move all played cards to discard
+    // check if available cards < 50 then reshuffle
+} 
 
 
 
