@@ -95,7 +95,8 @@ class BlackjackDeck : public Deck
     int min_value(int player_id) const;      // evaluates the first ace as 1
     int max_value(int player_id) const;      // evaluates the first ace as 11
     bool is_bust(int player_id) const;
-    void print_cards(int player_id, bool game_is_on = true) const;      // output function
+    bool has_natural(int player_id) const;
+    void print_cards(int player_id, bool dealer_hide_card = true) const;      // output function
     BlackjackOutcome calculate_win(int player_id) const;
     // move all played cards to discard
     // check if available cards < 50 then reshuffle

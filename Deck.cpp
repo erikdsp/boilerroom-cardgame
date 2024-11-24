@@ -56,6 +56,11 @@ bool Player::hit_or_stand()
 void Player::score_round(BlackjackOutcome outcome)
 {
     std::cout << m_name << " called score_round() with outcome " << static_cast<int>(outcome) << " (cast to int) \n";
+    // NATURAL 
+            // NATURAL    (purse += current_bid * 2.5, current_bid = 0)
+            // WINNER              (purse += current_bid * 2, current_bid = 0)
+            // BUST if player < dealer nothing                       (current_bid = 0)
+            // DRAW if player == dealer, bid is returned             (purse += current_bid, current_bid = 0)
 }
 
 // output function, to be called by score_round()
@@ -281,8 +286,33 @@ bool BlackjackDeck::is_bust(int player_id) const
     else return false;
 }
 
+bool BlackjackDeck::has_natural(int player_id) const
+{
+        int count {0};
+        int sum {0};
+    // loop through vector of cards
+    for ( auto c : m_cards) {
+        // loop can end when we reach first DECK card
+        if ( c.card_holder == CardHolder::DECK ) break;        
+        // if card matches id perform calculation
+        if ( c.card_holder == player_id )
+        {
+            if ( c.value == Cards::ACE ){
+                sum += 11;
+            } else if ( c.value > 10 ) {
+                sum += 10;
+            } else { 
+            sum += c.value;
+            }
+            count++;
+        }
+    }
+    if (sum == 21 && count == 2) return true;
+    else return false;
+}
+
 // output function, print the hand of player_id
-void BlackjackDeck::print_cards(int player_id, bool game_is_on) const
+void BlackjackDeck::print_cards(int player_id, bool dealer_hide_card) const
 {
     // if player print all cards
     // if dealer && game_is_on print 1 front 1 back
@@ -294,13 +324,24 @@ void BlackjackDeck::print_cards(int player_id, bool game_is_on) const
 BlackjackOutcome BlackjackDeck::calculate_win(int player_id) const
 {
     return BlackjackOutcome::BUST;      // dummy
+
+/** 
+            TODO: implement game winning logic:
+            // if player is bust, bid lost       (current_bid = 0)
+            // if dealer is bust - standing players adds bid    (purse += current_bid * 2, current_bid = 0)
+            // if player > dealer players get bid               (purse += current_bid * 2, current_bid = 0)
+            // if player < dealer nothing                       (current_bid = 0)
+            // if player == dealer, bid is returned             (purse += current_bid, current_bid = 0)
+ */
+
+
 }
 
 // function to prepare deck for next round
 void BlackjackDeck::clear_the_table(std::mt19937 gen)
 {
-    // move all played cards to discard
-    // check if available cards < 50 then reshuffle
+    // move all played cards to discard - set card_holder to CardHolder::DISCARD
+    // check if available cards < 50 then reshuffle         (assuming 6 cards in deck)
 } 
 
 

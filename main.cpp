@@ -26,8 +26,10 @@ int main()
      */
 
     // -- WELCOME --
+    // output: print welcome info and game rules
     print_blackjack_welcome();
 
+    // while (1)
     bool game_open{true};
     while(game_open)
     {
@@ -70,47 +72,49 @@ int main()
                 }
             }
             if (count == 0) players_to_play = false;
+            players_to_play = false;        // dummy - remove when functions are implemented
         }
 
         // -- DEALER DRAWS CARDS --
 
-        // loop until conditions for dealer play are satisfied
-        // output: show both dealer's cards
-        //     Rule: if total >= 17 stand (counting ace as 11)
-        // if max_value >= 17 && max_value <= 21 stand  - check ACE as 11 
-        // else if min_value >= 17                      - check ACE as 1
-        // output: show new cards (until done)
+        deck.print_cards(CardHolder::DEALER, false);    // print both dealer cards
 
-
+        int dealer_min{};    
+        int dealer_max{ deck.max_value(CardHolder::DEALER) };
+        // bool dealer_has_natural { deck.has_natural(CardHolder::DEALER) };
+        bool dealer_playing{ dealer_max < 17 };
+        while (dealer_playing)
+        {
+            deck.draw_card(CardHolder::DEALER);
+            deck.print_cards(CardHolder::DEALER, false); 
+            dealer_min = deck.min_value(CardHolder::DEALER);     // evaluate first ACE as 1
+            dealer_max = deck.max_value(CardHolder::DEALER);     // evaluate first ACE as 11
+            // tänk igenom logiken en gång till
+            if ( (dealer_max >= 17 && dealer_max <= 21) || (dealer_min >= 17) )
+            {
+                dealer_playing = false;
+            }
+            dealer_playing = false;     // dummy - remove when functions are implemented
+        }
 
         // -- CALCULATE WINNER --
-        // loop players - if player is bust, bid lost       (current_bid = 0)
-        // if dealer is bust - standing players adds bid    (purse += current_bid * 2, current_bid = 0)
-        // if player > dealer players get bid               (purse += current_bid * 2, current_bid = 0)
-        // if player < dealer nothing                       (current_bid = 0)
-        // if player == dealer, bid is returned             (purse += current_bid, current_bid = 0)
-        // loop through players, adjust current_bid, purse
-        // output: outcome of game
+            for (auto player : players)
+            {
+                // calculates and prints outcome
+                BlackjackOutcome player_result = deck.calculate_win(player.get_id());  
+                // updates player's purse
+                player.score_round(player_result);
+            }
+
         // -- CLEAR THE TABLE --
-        // clear_the_table(), sets all used cards to CardHolder::DISCARD
-        // clear_the_table also checks if remaining CardHolder::DECK < 50 (assuming 6 cards in deck)
-        // and then reshuffles deck 
+        deck.clear_the_table(gen.m_mt_rand);
+
         // -- PLAY ANOTHER ROUND --
         // output: prompt
         // input: y or n
-        game_open = false;
+        game_open = false;  // dummy - remove when functions are implemented
     }
     
-
-
-
-    /**   
-     * DONE: New data structure for Deck 
-     * TODO: Functions that loops through card vector
-     * PROS: more robust data integrity = less room for bugs
-     * CONS: requires more vector looping = slower
-    */
-
 
 
 
