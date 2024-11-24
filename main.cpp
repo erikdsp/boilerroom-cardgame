@@ -124,5 +124,13 @@ int main()
 // output: print welcome info and game rules
 void print_blackjack_welcome()
 {
-    std::cout << "Welcome to Black Jack\n";    
+    std::cout << "                                                                            \n"   
+              << "'||''|.   '||                  '||            '||'                 '||      \n"    
+              << " ||   ||   ||   ....     ....   ||  ..         ||   ....     ....   ||  ..  \n"
+              << " ||'''|.   ||  '' .||  .|   ''  || .'          ||  '' .||  .|   ''  || .'   \n"
+              << " ||    ||  ||  .|' ||  ||       ||'|.          ||  .|' ||  ||       ||'|.   \n"
+              << ".||...|'  .||. '|..'|'  '|...' .||. ||.    || .|'  '|..'|'  '|...' .||. ||. \n"
+              << "                                            '''                             \n"
+              << "                         A GAME BY SUVX24 GBG                               \n\n";
+ 
 }
