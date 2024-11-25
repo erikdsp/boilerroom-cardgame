@@ -16,7 +16,7 @@ class Bet{
     double stake_m;
 
     Bet(Deal &d_in, Player &p_in, double stake) : 
-        deal_m{&d_in}, player_m{&p_in}, stake_m{stake} {}
+        deal_m{&d_in}, player_m{&p_in}, stake_m{stake}, surrender_m{false}, blackjack_m{false}, stand_m{false} {}
     
     friend std::ostream& operator <<(std::ostream&, const Bet&);
 

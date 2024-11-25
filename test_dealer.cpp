@@ -220,7 +220,7 @@ SCENARIO ("Deal"){
 
     GIVEN ("It is the player's turn and they have not previously chosen to stand on that bet"){
         REQUIRE_FALSE(bet.deal_m->is_bust());
-        REQUIRE_FALSE(bet.deal_m->stands());
+        REQUIRE_FALSE(bet.stands());
         WHEN ("The player choses hit"){
             // Setting cin input buffer to stringbuffer to sidestep manual input
             std::stringstream yes ("y");

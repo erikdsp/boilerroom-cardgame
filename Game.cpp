@@ -59,7 +59,7 @@ void Game::join_game(Player* new_player){
 
             input = in_buf[0]-'0';
 
-            if ( (input > 0 && input < 7 ) 
+            if ( (input > 0 && input <= 7 ) 
                     && std::find(
                         open_spots.begin(), 
                         open_spots.end(), 
@@ -98,20 +98,32 @@ void Game::run(){
     }
 
     // Ask the players for their actions
+    check_blackjack();
     surrendering();
     splitting();
     doubling_down();
     hitting();
     resolve_bets();
+    dealer.discard_deal(house.empty());
 }
 
 void Game::cleanup_bets(){
+    std::string reason {};
+
     auto del = std::find_if( 
             bets.begin(), 
             bets.end(), 
             [&](Bet& b) 
                 {return b.surrender() == true || b.bust() == true || b.blackjack() == true;});
     while ( del != bets.end() ){
+        if( (*del).surrender() ){
+            reason = "surrender.";
+        } else if( (*del).bust() ){
+            reason = "bust.";
+        } else {
+            reason = "blackjack payout.";
+        }
+        std::cout << "Removing " << *(*del).player_m << "'s bet due to " << reason << '\n';
         bets.erase(del);
         del = std::find_if( 
             bets.begin(), 
@@ -122,27 +134,37 @@ void Game::cleanup_bets(){
 }
 
 void Game::check_blackjack(){
+    bool has_blackjack {false};
+    
     for (auto bet : bets){
         if ( bet.deal_m->max_value() == 21 ){
             bet.blackjack(true);
+            has_blackjack = true;
+            std::cout << *bet.player_m << " has blackjack!" << '\n';
         }
     }
-    dealer.deal(house);
-    if(house.max_value() == 21){
-        std::cout << "House wins with blackjack." << '\n';
-        for (auto deal : spots){
-            dealer.discard_deal(deal.empty());
-        }
-        bets.clear();
-        return;
-    } else { //Payout 3:2
-        for (auto bet : bets){
-            if ( bet.blackjack()){
-                bet.player_m->credit(bet.stake_m*1.5);
+    if (has_blackjack){
+        dealer.deal(house);
+        if(house.max_value() == 21){
+            std::cout << "House has blackjack." << '\n';
+            for ( auto bet : bets ){
+                if (bet.blackjack()){
+                    std::cout << "Push for " << bet.player_m << '\n';
+                    bet.player_m->credit(bet.stake_m);
+                }
+                dealer.discard_deal(bet.deal_m->empty());
+            }
+            bets.clear();
+            return;
+        } else { //Payout 3:2
+            for (auto bet : bets){
+                if ( bet.blackjack()){
+                    bet.player_m->credit(bet.stake_m*1.5);
+                }
             }
         }
+        cleanup_bets();
     }
-    cleanup_bets();
 }
 
 void Game::surrendering(){    
@@ -160,7 +182,6 @@ void Game::surrendering(){
         }
     }
     cleanup_bets();
-
 }
 
 void Game::splitting(){
@@ -239,16 +260,20 @@ void Game::resolve_bets(){
             bet.player_m->credit(bet.stake_m);
         }
     } else {
-        std::cout << "The house has " << house << " (" << house.best_value() << ")" << '\n';
-    }
 
-    for (auto bet : bets){
-        std::cout << *bet.player_m << " has " << *bet.deal_m << " (" << bet.deal_m->best_value() << ")" << '\n';
-        if ( bet.deal_m->best_value() > house.best_value() ){
-            std::cout << *bet.player_m << " wins $" << bet.stake_m << '\n';
-        } else {
-            std::cout << *bet.player_m << "loses." << '\n';
+        std::cout << "The house has " << house << " (" << house.best_value() << ")" << '\n';
+
+        for (auto bet : bets){
+            std::cout << *bet.player_m << " has " << *bet.deal_m << " (" << bet.deal_m->best_value() << ")" << '\n';
+            if ( bet.deal_m->best_value() > house.best_value() || house.is_bust() ){
+                std::cout << *bet.player_m << " wins $" << bet.stake_m << '\n';
+            } else {
+                std::cout << *bet.player_m << " loses." << '\n';
+            }
         }
+    }
+    for( auto bet : bets ){
+        dealer.discard_deal(bet.deal_m->empty());
     }
     bets.clear();
 }
