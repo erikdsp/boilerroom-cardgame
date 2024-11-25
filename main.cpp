@@ -76,8 +76,9 @@ int main()
         }
 
         // -- DEALER DRAWS CARDS --
-
-        deck.print_cards(CardHolder::DEALER, false);    // print both dealer cards
+        
+        // print both dealer cards, dealer_hide_card = false
+        deck.print_cards(CardHolder::DEALER, false);    
 
         int dealer_min{};    
         int dealer_max{ deck.max_value(CardHolder::DEALER) };
@@ -89,8 +90,7 @@ int main()
             deck.print_cards(CardHolder::DEALER, false); 
             dealer_min = deck.min_value(CardHolder::DEALER);     // evaluate first ACE as 1
             dealer_max = deck.max_value(CardHolder::DEALER);     // evaluate first ACE as 11
-            // tänk igenom logiken en gång till
-            if ( (dealer_max >= 17 && dealer_max <= 21) || (dealer_min >= 17) )
+            if ( ( dealer_max >= 17 ) )
             {
                 dealer_playing = false;
             }
