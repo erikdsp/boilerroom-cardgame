@@ -16,6 +16,12 @@ Deck                    /
 BlackjackDeck : Deck    /
 RandomGenerator
 
+Branch: dev-ed-refactor
+
+Compile with -std=c++23 main.cpp Deck.cpp
+
+
+
 
 En giv har en pott (som man tar ur börsen)
 Man spelar given tills man antingen vinner eller förlorar given. 
