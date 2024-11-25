@@ -13,6 +13,8 @@ class Card{
 
     public:
     Card(int s, int v) : m_suit{s}, m_value{v}{}
+
+    friend std::ostream& operator << (std::ostream&, const Card&);
     
     int suit() const { return m_suit; }
     int value() const { return m_value; }
@@ -29,12 +31,15 @@ class Deal {
     void add_card(Card);
     Deal split();
 
+    friend bool operator< (Card&, Card&);
+    friend std::ostream& operator<< (std::ostream&, const Deal&);
+
     //min/max due to aces having two possible values
     int min_value() const;
     int max_value() const;
+    int best_value() const;
 
     bool is_bust() const;
-    bool stands() const;
     int size() const;
     bool splittable() const;
 

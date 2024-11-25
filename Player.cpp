@@ -53,3 +53,18 @@ bool Player::double_down(){
     std::cin    >> selection;
     return selection == 'y';
 }
+
+bool Player::hit(){
+    char selection {};
+    std::cout   << "Do you wish to hit?" << '\n' 
+                << "You will add a card to your deal." << '\n'
+                << "y/n -> ";
+    std::cin    >> selection;
+    return selection == 'y';
+
+}
+
+std::ostream& operator<<(std::ostream& os, const Player& p ){
+    os << p.name;
+    return os;
+}

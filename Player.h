@@ -16,6 +16,8 @@ class Player {
     void credit(double);
     bool can_pay(double amount) const;
 
+    friend std::ostream& operator<<(std::ostream&, const Player&);
+
     bool surrender();
     bool split();
     bool double_down();

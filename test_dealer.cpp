@@ -2,7 +2,8 @@
 #include "Game.h"
 #include "catch.hpp"
 
-double minimum_bid {20};
+const double minimum_bid {20};
+
 
 SCENARIO ("The dealer deals a card to a destination"){
     Deal destination {};
@@ -207,10 +208,34 @@ SCENARIO ("A split"){
 
 
 SCENARIO ("Deal"){
-    GIVEN ("It is the player's turn and they have not previously chosen to stand"){
-        WHEN ("The player choses to deal"){
-            THEN ("An additional card is dealt to their hand"){
+    CardDealer dealer;
+    dealer.reshuffle({{0,1}, {0,2}, {0,3}});
 
+    std::vector<Deal> betting_boxes {Deal()};
+    Player player("Player", minimum_bid);
+    std::vector<Bet> bets {{betting_boxes.front(), player, minimum_bid}};
+    auto bet = bets.front();
+    dealer.deal(*bet.deal_m);
+    dealer.deal(*bet.deal_m);
+
+    GIVEN ("It is the player's turn and they have not previously chosen to stand on that bet"){
+        REQUIRE_FALSE(bet.deal_m->is_bust());
+        REQUIRE_FALSE(bet.deal_m->stands());
+        WHEN ("The player choses hit"){
+            // Setting cin input buffer to stringbuffer to sidestep manual input
+            std::stringstream yes ("y");
+            std::streambuf *cinbuf = std::cin.rdbuf(); 
+            std::cin.rdbuf(yes.rdbuf());
+
+            REQUIRE(player.hit()); // Player choice
+            
+            //Resetting cin stream buffer
+            std::cin.rdbuf(cinbuf);
+
+            THEN ("An additional card is dealt to the hand the bet is on"){
+                dealer.deal(*bet.deal_m);
+
+                REQUIRE(bet.deal_m->size() == 3);
             }
         }
     }
@@ -218,10 +243,35 @@ SCENARIO ("Deal"){
 
 
 SCENARIO ("Double down"){
-    GIVEN ("The player has not chosen to stand and has enough money to double their bet on a position"){
-        WHEN ("The player adds an additional wager to the bet"){
-            THEN ("An additional card is dealt to their hand"){
+    GIVEN ("The player has a two card deal and has enough money to double their bet on that position"){
+        CardDealer dealer;
+        dealer.reshuffle({{0,1}, {0,2}, {0,3}});
 
+        std::vector<Deal> betting_boxes {Deal()};
+        Player player("Player", minimum_bid);
+        std::vector<Bet> bets {{betting_boxes.front(), player, minimum_bid}};
+        auto bet = bets.front();
+        dealer.deal(*bet.deal_m);
+        dealer.deal(*bet.deal_m);
+
+        WHEN ("The player choses to double down"){
+            // Setting cin input buffer to stringbuffer to sidestep manual input
+            std::stringstream yes ("y");
+            std::streambuf *cinbuf = std::cin.rdbuf(); 
+            std::cin.rdbuf(yes.rdbuf());
+
+            REQUIRE(player.double_down()); // Player choice
+            
+            //Resetting cin stream buffer
+            std::cin.rdbuf(cinbuf);
+
+            THEN ("The player adds an additional wager to the bet and an additional card is dealt to their hand, and they stand on that hand"){
+                REQUIRE(player.can_pay(bet.stake_m));
+                bet.stake(player.debit(bet.stake_m));
+                dealer.deal(*bet.deal_m);
+                REQUIRE_THAT(bet.stake_m, Catch::Matchers::WithinRel(minimum_bid * 2, 0.01));
+                REQUIRE(bet.deal_m->size() == 3);
+                REQUIRE(bet.stands(true) == true);
             }
         }
     }
@@ -229,14 +279,16 @@ SCENARIO ("Double down"){
 
 
 SCENARIO ("Hand going bust"){
-    GIVEN ("A card is dealt to a hand"){
-        WHEN ("The minumum value of the hand is above 21"){
+    GIVEN ("A deal gets a third card added"){
+        WHEN ("A card is dealt to a hand, making the minimum value of the hand above 21"){
             THEN ("The hand is bust and the position lost"){
 
             }
         }
     }
 }
+
+
 
 
 SCENARIO ("Bets settled"){
