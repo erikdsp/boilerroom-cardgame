@@ -28,7 +28,7 @@ class Player {
     private:
     std::string m_name;
     double m_purse;
-    double current_bid{};
+    double m_current_bid{};
     bool m_playing{true};
     int m_id;               // 0 means not playing, >= 1 means playing
     public:

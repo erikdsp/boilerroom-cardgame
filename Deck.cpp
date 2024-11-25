@@ -34,10 +34,26 @@ bool Player::is_playing()
 }
 
 // input/output function, to be called from main
+// gör som returnerar int istället - förslag från Oscar
 void Player::enter_bid(int& nxt_id)
 {
-    // output: prompt
-    // input: bid
+    int bid{0};
+    std::cout << get_name() << ", please enter a bid (minimum 10 SEK) or 0 to opt out of game: ";
+    while (bid > 0)
+    {
+        std::cin >> bid;
+        if (m_purse > bid)
+        {
+            m_current_bid = bid;
+            m_purse -= bid;
+            m_id = nxt_id;
+            nxt_id++;
+        }
+        else
+        {
+            std::cout << "Bid too low. ";
+        }
+    }
     // if (m_purse > bid) {m_current_bid = bid, m_purse -= bid}
     std::cout << m_name << " called enter_bid() with nxt_id " << nxt_id << "\n";
 
