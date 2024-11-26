@@ -239,12 +239,12 @@ void BlackjackDeck::draw_card(int id){
     bool card_was_drawn{ false };
     // loop through vector of cards
     int i = 0;
-    for ( auto card = m_cards.begin() ; card != m_cards.end() ; card++ )
+    for ( auto& card : m_cards )
     {
-        if ( card->card_holder == CardHolder::DECK )
+        if ( card.card_holder == CardHolder::DECK )
         {
             std::cout << "draw_card(" << id << ") " << " Card no " << i << "\n";
-            card->card_holder = id; 
+            card.card_holder = id; 
             card_was_drawn = true;
             break;            // end loop after card is drawn
         }
@@ -267,7 +267,7 @@ int BlackjackDeck::min_value(int player_id) const{
     int sum {0};
 
     // loop through vector of cards
-    for ( auto c : m_cards) {
+    for ( const auto& c : m_cards) {
         // loop can end when we reach first DECK card
         if ( c.card_holder == CardHolder::DECK ) break;        
         // if card matches id perform calculation
@@ -293,11 +293,11 @@ int BlackjackDeck::min_value(int player_id) const{
  * @param player_id
  */
 int BlackjackDeck::max_value(int player_id) const{
+    
     int sum{ 0 };
-
     bool counted_one_ace{ false };
     // loop through vector of cards
-    for ( auto c : m_cards) {
+    for ( const auto& c : m_cards) {
         // loop can end when we reach first DECK card
         if ( c.card_holder == CardHolder::DECK ) break;  
         // if card matches id perform calculation
@@ -330,7 +330,7 @@ bool BlackjackDeck::has_natural(int player_id) const
         int count {0};
         int sum {0};
     // loop through vector of cards
-    for ( auto c : m_cards) {
+    for ( const auto& c : m_cards) {
         // loop can end when we reach first DECK card
         if ( c.card_holder == CardHolder::DECK ) break;        
         // if card matches id perform calculation
@@ -354,7 +354,7 @@ bool BlackjackDeck::has_natural(int player_id) const
 void BlackjackDeck::print_cards(int player_id, bool dealer_hide_card) const
 {
     int count { 0 };
-    for ( auto c : m_cards)
+    for ( const auto& c : m_cards)
     {
         if ( c.card_holder == CardHolder::DECK )    // end loop when we reach deck
         {

@@ -40,14 +40,14 @@ int main()
         // -- DEALING CARDS --
         for (int i = 0 ; i < 2 ; ++i)
         {
-            for (auto player = players.begin() ; player != players.end() ; player++ )
+            for (auto& player : players)
             {
-                if (player->is_playing())
+                if (player.is_playing())
                 {
-                    deck.draw_card(player->get_id());  
+                    deck.draw_card(player.get_id());  
                     if (i != 0)
                     {
-                        deck.print_cards(player->get_id());
+                        deck.print_cards(player.get_id());
                     }
                 }
             }
@@ -69,16 +69,16 @@ int main()
         while (players_to_play)
         {    
             int count = 0; 
-            for (auto player = players.begin() ; player != players.end() ; player++ )
+            for (auto& player : players)
             {
-                if (player->is_playing()) 
+                if (player.is_playing()) 
                 {
-                    bool hit = player->hit_or_stand();
+                    bool hit = player.hit_or_stand();
                     if (hit)
                     {
-                        deck.draw_card(player->get_id());
+                        deck.draw_card(player.get_id());
                         count++;
-                        deck.print_cards(player->get_id());
+                        deck.print_cards(player.get_id());
                     }
                 }
             }
@@ -109,12 +109,12 @@ int main()
         }
 
         // -- CALCULATE WINNER --
-            for (auto player = players.begin() ; player != players.end() ; player++ )
+            for ( auto& player : players )
             {
                 // calculates and prints outcome
-                BlackjackOutcome player_result = deck.calculate_win(player->get_id());  
+                BlackjackOutcome player_result = deck.calculate_win(player.get_id());  
                 // updates player's purse
-                player->score_round(player_result);
+                player.score_round(player_result);
             }
 
         // -- CLEAR THE TABLE --
