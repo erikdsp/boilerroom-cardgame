@@ -235,14 +235,17 @@ BlackjackDeck::BlackjackDeck(std::vector<Card> cards)
 void BlackjackDeck::draw_card(int id){
     bool card_was_drawn{ false };
     // loop through vector of cards
-    for ( auto c : m_cards)
+    for ( auto c_it = m_cards.begin() ; c_it != m_cards.end() ; c_it++ )
     {
-        if ( c.card_holder == CardHolder::DECK )
+        int i = 0;
+        if ( c_it->card_holder == CardHolder::DECK )
         {
-            c.card_holder = id; 
+            std::cout << "draw_card(" << id << ") " << " Card no " << i << "\n";
+            c_it->card_holder = id; 
             card_was_drawn = true;
             break;            // end loop after card is drawn
         }
+        ++i;
     }
 
     if (!card_was_drawn)
@@ -352,7 +355,7 @@ void BlackjackDeck::print_cards(int player_id, bool dealer_hide_card) const
     {
         if ( c.card_holder == CardHolder::DECK )    // end loop when we reach deck
         {
-            break;
+            // break;
         }
         if ( c.card_holder == player_id )
         {

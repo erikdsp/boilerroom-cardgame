@@ -100,7 +100,8 @@ class BlackjackDeck : public Deck
     BlackjackOutcome calculate_win(int player_id) const;
     // move all played cards to discard
     // check if available cards < 50 then reshuffle
-    void clear_the_table(std::mt19937 gen);         
+    void clear_the_table(std::mt19937 gen);
+             
     
 };
 

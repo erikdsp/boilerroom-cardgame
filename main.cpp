@@ -31,23 +31,23 @@ int main()
     {
         // -- BIDDING --
         // enter bids, loop through players and ask for bid
-        for (auto player : players)
+        for (auto player = players.begin() ; player != players.end() ; player++ )
         {
-            player.enter_bid(next_id);      // pass by reference, if successful will update next_id
-            std::cout << player.get_name() << " playing: " << player.is_playing() << " id: " << player.get_id() << "\n";    // test output
+            player->enter_bid(next_id);      // pass by reference, if successful will update next_id
+            std::cout << player->get_name() << " playing: " << player->is_playing() << " id: " << player->get_id() << "\n";    // test output
         }
 
         // -- DEALING CARDS --
         for (int i = 0 ; i < 2 ; ++i)
         {
-                for (auto player : players)
+            for (auto player = players.begin() ; player != players.end() ; player++ )
             {
-                if (player.is_playing())
+                if (player->is_playing())
                 {
-                    deck.draw_card(player.get_id());  
+                    deck.draw_card(player->get_id());  
                     if (i != 0)
                     {
-                        deck.print_cards(player.get_id());
+                        deck.print_cards(player->get_id());
                     }
                 }
             }
@@ -58,6 +58,9 @@ int main()
             }
         }
 
+        // deck.print_cards(1);
+
+
         // check for natural
         // if a player has a natural, dealer does not show card. But evaluate against player
 
@@ -66,15 +69,15 @@ int main()
         while (players_to_play)
         {    
             int count = 0; 
-            for (auto player : players)
+            for (auto player = players.begin() ; player != players.end() ; player++ )
             {
-                if (player.is_playing()) 
+                if (player->is_playing()) 
                 {
-                    bool hit = player.hit_or_stand();
+                    bool hit = player->hit_or_stand();
                     if (hit)
                     {
                         count++;
-                        deck.print_cards(player.get_id());
+                        deck.print_cards(player->get_id());
                     }
                 }
             }
@@ -105,12 +108,12 @@ int main()
         }
 
         // -- CALCULATE WINNER --
-            for (auto player : players)
+            for (auto player = players.begin() ; player != players.end() ; player++ )
             {
                 // calculates and prints outcome
-                BlackjackOutcome player_result = deck.calculate_win(player.get_id());  
+                BlackjackOutcome player_result = deck.calculate_win(player->get_id());  
                 // updates player's purse
-                player.score_round(player_result);
+                player->score_round(player_result);
             }
 
         // -- CLEAR THE TABLE --
