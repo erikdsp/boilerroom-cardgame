@@ -258,7 +258,7 @@ void BlackjackDeck::draw_card(int id){
     {
         if ( card.card_holder == CardHolder::DECK )
         {
-            std::cout << "draw_card(" << id << ") " << " Card no " << i << "\n";
+            // std::cout << "draw_card(" << id << ") " << " Card no " << i << "\n";
             card.card_holder = id; 
             card_was_drawn = true;
             break;            // end loop after card is drawn
@@ -366,18 +366,19 @@ bool BlackjackDeck::has_natural(int player_id) const
 }
 
 // output function, print the hand of player_id
-void BlackjackDeck::print_cards(int player_id, bool dealer_hide_card) const
+void BlackjackDeck::print_cards(Player& player, bool dealer_hide_card) const
 {
     int count { 0 };
+    std::cout << player.get_name() << " has ";
     for ( const auto& c : m_cards)
     {
         if ( c.card_holder == CardHolder::DECK )    // end loop when we reach deck
         {
             // break;
         }
-        if ( c.card_holder == player_id )
+        if ( c.card_holder == player.get_id() )
         {
-            if ( player_id == CardHolder::DEALER && dealer_hide_card && count > 0)
+            if ( player.get_id() == CardHolder::DEALER && dealer_hide_card && count > 0)
             {
                 std::cout << "Hidden Card\n";
                 ++count;

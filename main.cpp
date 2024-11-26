@@ -15,6 +15,7 @@ int main()
     RandomGenerator gen{};
     BlackjackDeck deck{ 6 , gen.m_mt_rand };
     std::vector<Player> players { {"Player 1"}, {"Player 2"} };
+    Player dealer { "House", CardHolder::DEALER };
     int next_id { 1 };
 
     /**
@@ -34,7 +35,7 @@ int main()
         for (auto& player : players )
         {
             player.enter_bid(next_id);      // pass by reference, if successful will update next_id
-            std::cout << player.get_name() << " playing: " << player.is_playing() << " id: " << player.get_id() << "\n";    // test output
+            // std::cout << player.get_name() << " playing: " << player.is_playing() << " id: " << player.get_id() << "\n";    // test output
         }
 
         // -- DEALING CARDS --
@@ -47,14 +48,14 @@ int main()
                     deck.draw_card(player.get_id());  
                     if (i != 0)
                     {
-                        deck.print_cards(player.get_id());
+                        deck.print_cards(player);
                     }
                 }
             }
             deck.draw_card(CardHolder::DEALER);
             if (i != 0)
             {
-                deck.print_cards(CardHolder::DEALER);
+                deck.print_cards(dealer);
             }
         }
 
@@ -83,7 +84,7 @@ int main()
                     {
                         deck.draw_card(player.get_id());
                         count++;
-                        deck.print_cards(player.get_id());
+                        deck.print_cards(player);
                     }
                     else if (decision == BlackjackRules::STAND)
                     {
@@ -96,13 +97,12 @@ int main()
                 }
             }
             if (count == 0) players_to_play = false;
-            // players_to_play = false;        // dummy - remove when functions are implemented
         }
 
         // -- DEALER DRAWS CARDS --
         
         // print both dealer cards, dealer_hide_card = false
-        deck.print_cards(CardHolder::DEALER, false);    
+        deck.print_cards(dealer, false);    
 
         int dealer_min{};    
         int dealer_max{ deck.max_value(CardHolder::DEALER) };
@@ -111,7 +111,7 @@ int main()
         while (dealer_playing)
         {
             deck.draw_card(CardHolder::DEALER);
-            deck.print_cards(CardHolder::DEALER, false); 
+            deck.print_cards(dealer, false); 
             dealer_min = deck.min_value(CardHolder::DEALER);     // evaluate first ACE as 1
             dealer_max = deck.max_value(CardHolder::DEALER);     // evaluate first ACE as 11
             if ( ( dealer_max >= 17 ) )
