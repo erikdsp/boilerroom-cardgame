@@ -14,7 +14,7 @@ int main()
 
     RandomGenerator gen{};
     BlackjackDeck deck{ 6 , gen.m_mt_rand };
-    std::vector<Player> players { {"Player 1" , 1}, {"Player 2" , 2} };
+    std::vector<Player> players { {"Player 1"}, {"Player 2"} };
     int next_id { 1 };
 
     /**
@@ -34,6 +34,7 @@ int main()
         for (auto player : players)
         {
             player.enter_bid(next_id);      // pass by reference, if successful will update next_id
+            std::cout << player.get_name() << " playing: " << player.is_playing() << " id: " << player.get_id() << "\n";    // test output
         }
 
         // -- DEALING CARDS --
@@ -41,15 +42,25 @@ int main()
         {
                 for (auto player : players)
             {
-                deck.draw_card(player.get_id());  
-                deck.print_cards(player.get_id());
+                if (player.is_playing())
+                {
+                    deck.draw_card(player.get_id());  
+                    if (i != 0)
+                    {
+                        deck.print_cards(player.get_id());
+                    }
+                }
             }
             deck.draw_card(CardHolder::DEALER);
-            deck.print_cards(CardHolder::DEALER);
+            if (i != 0)
+            {
+                deck.print_cards(CardHolder::DEALER);
+            }
         }
-        // output for each card?? wait 500 ms for each card?
 
-        // if a player has a natural. DOES DEALER SHOW HAND TO ALL PLAYERS?
+        // check for natural
+        // if a player has a natural, dealer does not show card. But evaluate against player
+
         // -- HIT OR STAND --
         bool players_to_play {true};
         while (players_to_play)

@@ -69,6 +69,7 @@ void Player::enter_bid(int& nxt_id)
             std::cout << m_name << " entering game with bid of " << bid << " SEK\n";
             m_current_bid = bid;
             m_purse -= bid;
+            m_playing = true;
             m_id = nxt_id++;
             break;
         }
@@ -346,6 +347,28 @@ bool BlackjackDeck::has_natural(int player_id) const
 // output function, print the hand of player_id
 void BlackjackDeck::print_cards(int player_id, bool dealer_hide_card) const
 {
+    int count { 0 };
+    for ( auto c : m_cards)
+    {
+        if ( c.card_holder == CardHolder::DECK )    // end loop when we reach deck
+        {
+            break;
+        }
+        if ( c.card_holder == player_id )
+        {
+            if ( player_id == CardHolder::DEALER && dealer_hide_card && count > 0)
+            {
+                std::cout << "Hidden Card\n";
+                ++count;
+            }
+            else
+            {
+                std::cout << "Value: " << c.value << "Suit: " << c.suit << "\n";
+                ++count;
+            }
+        }
+    }
+
     // if player print all cards
     // if dealer && game_is_on print 1 front 1 back
     // if dealer && !game_is_on print all cards

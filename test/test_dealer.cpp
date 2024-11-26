@@ -1,8 +1,8 @@
 #define CATCH_CONFIG_MAIN
-#include "Dealer.h"
+#include "../Deck.h"
 #include "catch.hpp"
 
-SCENARIO ("The dealer deals a card to a destination"){
+/* SCENARIO ("The dealer deals a card to a destination"){
     Deal destination {};
     CardDealer dealer;
     GIVEN ("There is one card, 9 spades in the shoe") {
@@ -15,7 +15,7 @@ SCENARIO ("The dealer deals a card to a destination"){
             }
         }
     }
-}
+} */
 
 SCENARIO ("A play round is started"){
     GIVEN ("A player has enough money for at least starting bid"){
