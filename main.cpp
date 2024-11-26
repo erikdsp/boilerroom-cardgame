@@ -76,6 +76,7 @@ int main()
                     bool hit = player->hit_or_stand();
                     if (hit)
                     {
+                        deck.draw_card(player->get_id());
                         count++;
                         deck.print_cards(player->get_id());
                     }

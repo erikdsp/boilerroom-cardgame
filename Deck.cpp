@@ -79,6 +79,9 @@ void Player::enter_bid(int& nxt_id)
 // input/output function, to be called from main
 bool Player::hit_or_stand()
 {
+    char input;
+    std::cout << m_name << ": h) hit or s) stand? -> ";
+    std::cin >> input;
     // output: prompt
     // input: h or s
     std::cout << m_name << " called hit_or_stand()\n";
@@ -235,13 +238,13 @@ BlackjackDeck::BlackjackDeck(std::vector<Card> cards)
 void BlackjackDeck::draw_card(int id){
     bool card_was_drawn{ false };
     // loop through vector of cards
-    for ( auto c_it = m_cards.begin() ; c_it != m_cards.end() ; c_it++ )
+    int i = 0;
+    for ( auto card = m_cards.begin() ; card != m_cards.end() ; card++ )
     {
-        int i = 0;
-        if ( c_it->card_holder == CardHolder::DECK )
+        if ( card->card_holder == CardHolder::DECK )
         {
             std::cout << "draw_card(" << id << ") " << " Card no " << i << "\n";
-            c_it->card_holder = id; 
+            card->card_holder = id; 
             card_was_drawn = true;
             break;            // end loop after card is drawn
         }
@@ -366,7 +369,7 @@ void BlackjackDeck::print_cards(int player_id, bool dealer_hide_card) const
             }
             else
             {
-                std::cout << "Value: " << c.value << "Suit: " << c.suit << "\n";
+                std::cout << "Value: " << c.value << " Suit: " << c.suit << "\n";
                 ++count;
             }
         }
