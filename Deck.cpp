@@ -474,10 +474,40 @@ BlackjackOutcome BlackjackDeck::calculate_win(Player& player) const
 // function to prepare deck for next round
 void BlackjackDeck::clear_the_table(std::mt19937 gen)
 {
-    // move all played cards to discard - set card_holder to CardHolder::DISCARD
-    // check if available cards < 50 then reshuffle         (assuming 6 cards in deck)
+    int cards_left{0};
+    
+    // move played cards to DISCARD and count cards left in deck
+    for (auto& card : m_cards)
+    {
+        if (card.card_holder != CardHolder::DECK) {
+            card.card_holder = CardHolder::DISCARD;
+        } else {
+            cards_left++;
+        }
+    }
+
+    // if less than 50 cards, reset Cardholder and shuffle
+    if (cards_left < 50) 
+    {
+        for (auto& card : m_cards){
+            card.card_holder = CardHolder::DECK;
+        }
+        shuffle_deck(gen);
+    }
+
 } 
 
+// test
+void BlackjackDeck::cards_left()
+{
+    int i {0};
+    for (auto& card : m_cards){
+        if (card.card_holder == CardHolder::DECK)   {
+            i++;
+        }
+    }
+    std::cout << "Cards left: " << i << "\n";
+}
 
 
 /** 
