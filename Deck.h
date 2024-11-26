@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <iostream>
 #include <exception>
+#include <limits>
 
 /** Card 
  * MEMBERS: suit, value, card_holder
@@ -38,7 +39,8 @@ class Player {
     std::string get_name();
     bool is_playing();
     void enter_bid(int& nxt_id);            // input/output function
-    bool hit_or_stand();                    // input/output function
+    void set_playing(bool b);
+    BlackjackRules::HitOrStand hit_or_stand();                    // input/output function
     void score_round(BlackjackOutcome outcome);
     private:
     void print_outcome(int amount);         // output function, called by score_round()

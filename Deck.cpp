@@ -76,16 +76,31 @@ void Player::enter_bid(int& nxt_id)
     }
 }  
 
+void Player::set_playing(bool b)
+{
+    m_playing = b;
+}
+
+
 // input/output function, to be called from main
-bool Player::hit_or_stand()
+BlackjackRules::HitOrStand Player::hit_or_stand()
 {
     char input;
     std::cout << m_name << ": h) hit or s) stand? -> ";
-    std::cin >> input;
-    // output: prompt
-    // input: h or s
-    std::cout << m_name << " called hit_or_stand()\n";
-    return false;       // returns true on hit
+
+    // add input checking
+    while (std::cin >> input)
+    {
+        switch(input)
+        {
+            case 'h':
+            return BlackjackRules::HIT;
+            case 's':
+            return BlackjackRules::STAND;
+            default:
+        }
+    }
+    return BlackjackRules::ERROR;
 }
 
 // update each player with outcome from BlackjackDeck::calculate_win()

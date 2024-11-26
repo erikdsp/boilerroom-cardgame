@@ -58,8 +58,6 @@ int main()
             }
         }
 
-        // deck.print_cards(1);
-
 
         // check for natural
         // if a player has a natural, dealer does not show card. But evaluate against player
@@ -71,19 +69,34 @@ int main()
             int count = 0; 
             for (auto& player : players)
             {
+                // check if player is bust
+                if (deck.is_bust(player.get_id())) 
+                {
+                    player.set_playing(false);
+                }
+                // ask active players for hit or stand
                 if (player.is_playing()) 
                 {
-                    bool hit = player.hit_or_stand();
-                    if (hit)
+                    BlackjackRules::HitOrStand decision = player.hit_or_stand();
+                    std::cout << "Hit: " << decision << "\n";
+                    if (decision == BlackjackRules::HIT)
                     {
                         deck.draw_card(player.get_id());
                         count++;
                         deck.print_cards(player.get_id());
                     }
+                    else if (decision == BlackjackRules::STAND)
+                    {
+                        player.set_playing(false);
+                    }
+                    else 
+                    {
+                        std::cerr << "Error: hit_or_stand returned ERROR\n";
+                    }
                 }
             }
             if (count == 0) players_to_play = false;
-            players_to_play = false;        // dummy - remove when functions are implemented
+            // players_to_play = false;        // dummy - remove when functions are implemented
         }
 
         // -- DEALER DRAWS CARDS --
