@@ -1,5 +1,8 @@
 #ifndef CARD_ENUMS_H
 #define CARD_ENUMS_H
+#include <map>
+#include <string>
+
 
 namespace Cards
 {
@@ -26,7 +29,30 @@ namespace Cards
         KING
     };
 
-}
+    const inline std::map<int, std::string_view> value_out {
+        {1, "Ace"},
+        {2, "2"},
+        {3, "3"},
+        {4, "4"},
+        {5, "5"},
+        {6, "6"},
+        {7, "7"},
+        {8, "8"},
+        {9, "9"},
+        {10, "10"},
+        {11, "Jack"},
+        {12, "Queen"},
+        {13, "King"},
+    };
+
+const inline std::map<int, std::string_view> suit_out {
+        {1, "Clubs"},
+        {2, "Diamonds"},
+        {3, "Spades"},
+        {4, "Hearts"},
+    };
+
+} // Cards end
 
 namespace CardHolder
 {

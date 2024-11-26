@@ -8,6 +8,9 @@
 #include <iostream>
 #include <exception>
 #include <limits>
+#include <string>
+#include <map>
+
 
 /** Card 
  * MEMBERS: suit, value, card_holder

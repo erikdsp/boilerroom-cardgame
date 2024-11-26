@@ -369,7 +369,7 @@ bool BlackjackDeck::has_natural(int player_id) const
 void BlackjackDeck::print_cards(Player& player, bool dealer_hide_card) const
 {
     int count { 0 };
-    std::cout << player.get_name() << " has ";
+    std::cout << player.get_name() << " has - ";
     for ( const auto& c : m_cards)
     {
         if ( c.card_holder == CardHolder::DECK )    // end loop when we reach deck
@@ -380,16 +380,17 @@ void BlackjackDeck::print_cards(Player& player, bool dealer_hide_card) const
         {
             if ( player.get_id() == CardHolder::DEALER && dealer_hide_card && count > 0)
             {
-                std::cout << "Hidden Card\n";
+                std::cout << "a Card Face Down\n";
                 ++count;
             }
             else
             {
-                std::cout << "Value: " << c.value << " Suit: " << c.suit << "\n";
+                std::cout << Cards::value_out.at(c.value) << " of " << Cards::suit_out.at(c.suit) << " - ";
                 ++count;
             }
         }
     }
+    std::cout << "\n";
 
     // if player print all cards
     // if dealer && game_is_on print 1 front 1 back

@@ -18,6 +18,8 @@ int main()
     Player dealer { "House", CardHolder::DEALER };
     int next_id { 1 };
 
+    // std::cout << Cards::value_out.at(1) << "\n";
+
     /**
      * TODO: Implement Card Dealer in main 
      */
