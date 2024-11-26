@@ -31,10 +31,10 @@ int main()
     {
         // -- BIDDING --
         // enter bids, loop through players and ask for bid
-        for (auto player = players.begin() ; player != players.end() ; player++ )
+        for (auto& player : players )
         {
-            player->enter_bid(next_id);      // pass by reference, if successful will update next_id
-            std::cout << player->get_name() << " playing: " << player->is_playing() << " id: " << player->get_id() << "\n";    // test output
+            player.enter_bid(next_id);      // pass by reference, if successful will update next_id
+            std::cout << player.get_name() << " playing: " << player.is_playing() << " id: " << player.get_id() << "\n";    // test output
         }
 
         // -- DEALING CARDS --
