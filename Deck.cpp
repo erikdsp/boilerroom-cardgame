@@ -115,9 +115,24 @@ void Player::score_round(BlackjackOutcome outcome)
 }
 
 // output function, to be called by score_round()
-void Player::print_outcome(int amount)
+void Player::print_outcome(BlackjackOutcome outcome)
 {
-    std::cout << "print_outcome() called with amount " << amount << "\n";
+    std::cout << m_name << " ";
+    if (outcome == BlackjackOutcome::NATURAL) {
+        std::cout << "wins " << m_current_bid * 1.5 << " SEK\n";
+    }
+    else if (outcome == BlackjackOutcome::WINNER) {
+        std::cout << "wins " << m_current_bid << " SEK\n";
+    }
+    else if (outcome == BlackjackOutcome::DRAW) {
+        std::cout << "and house is a tie " << "\n";
+    }
+    else if (outcome == BlackjackOutcome::BUST) {
+        std::cout << "loses the bet of " << m_current_bid << " SEK \n";
+    }
+    else {
+        std::cout << "ERROR: print_outcome called with invalid outcome\n";
+    }
 }
 
 // function for testing. Maybe useful later if we have a menu system
@@ -365,7 +380,7 @@ bool BlackjackDeck::has_natural(int player_id) const
     else return false;
 }
 
-// output function, print the hand of player_id
+// output function, print the hand of player
 void BlackjackDeck::print_cards(Player& player, bool dealer_hide_card) const
 {
     int count { 0 };
@@ -398,10 +413,37 @@ void BlackjackDeck::print_cards(Player& player, bool dealer_hide_card) const
     // else print error
 }      
 
-// check player against dealer and return NATURAL, WINNER or BUST
-BlackjackOutcome BlackjackDeck::calculate_win(int player_id) const
+// check player against dealer and return NATURAL, WINNER, BUST or DRAW
+BlackjackOutcome BlackjackDeck::calculate_win(Player& player) const
 {
-    return BlackjackOutcome::BUST;      // dummy
+    if (has_natural(player.get_id())) {
+        if (has_natural(CardHolder::DEALER))
+        {
+            return BlackjackOutcome::DRAW;   
+        }
+        else 
+        {
+            return BlackjackOutcome::NATURAL;
+        }
+    } else if (is_bust(player.get_id())) {
+        return BlackjackOutcome::BUST;
+    } else if (is_bust(CardHolder::DEALER)) {
+        return BlackjackOutcome::WINNER;
+    } else {
+        int player_min {min_value(player.get_id()) };
+        int player_max {max_value(player.get_id()) };
+        int player_opt { player_max <= 21 ? player_max : player_min };
+        int dealer_min {min_value(CardHolder::DEALER)};
+        int dealer_max {max_value(CardHolder::DEALER)};
+        int dealer_opt { dealer_max <= 21 ? dealer_max : dealer_min };
+        if (player_opt > dealer_opt) {
+            return BlackjackOutcome::WINNER;
+        } else if (player_opt == dealer_opt) {
+            return BlackjackOutcome::DRAW;
+        } else {
+            return BlackjackOutcome::BUST;
+        }
+    }
 
 /** 
             TODO: implement game winning logic:

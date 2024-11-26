@@ -28,7 +28,6 @@ int main()
     // output: print welcome info and game rules
     print_blackjack_welcome();
 
-    // while (1)
     bool game_open{true};
     while(game_open)
     {
@@ -81,7 +80,7 @@ int main()
                 if (player.is_playing()) 
                 {
                     BlackjackRules::HitOrStand decision = player.hit_or_stand();
-                    std::cout << "Hit: " << decision << "\n";
+                    // std::cout << "Hit: " << decision << "\n";
                     if (decision == BlackjackRules::HIT)
                     {
                         deck.draw_card(player.get_id());
@@ -116,19 +115,20 @@ int main()
             deck.print_cards(dealer, false); 
             dealer_min = deck.min_value(CardHolder::DEALER);     // evaluate first ACE as 1
             dealer_max = deck.max_value(CardHolder::DEALER);     // evaluate first ACE as 11
-            if ( ( dealer_max >= 17 ) )
+            if ( ( dealer_max >= 17 && dealer_max <= 21 ) || dealer_min >= 17 )
             {
                 dealer_playing = false;
             }
-            dealer_playing = false;     // dummy - remove when functions are implemented
+            // dealer_playing = false;     // dummy - remove when functions are implemented
         }
 
         // -- CALCULATE WINNER --
             for ( auto& player : players )
             {
-                // calculates and prints outcome
-                BlackjackOutcome player_result = deck.calculate_win(player.get_id());  
-                // updates player's purse
+                // calculates outcome
+                BlackjackOutcome player_result = deck.calculate_win(player);  
+                
+                // prints outcome and updates player's purse
                 player.score_round(player_result);
             }
 

@@ -65,9 +65,9 @@ namespace CardHolder
 
 enum class BlackjackOutcome {
         NATURAL = 1,
-        WINNER,
-        BUST,
-        DRAW
+        WINNER = 2,
+        BUST = 3,
+        DRAW = 4
 };
 
 namespace BlackjackRules

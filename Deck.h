@@ -46,7 +46,7 @@ class Player {
     BlackjackRules::HitOrStand hit_or_stand();                    // input/output function
     void score_round(BlackjackOutcome outcome);
     private:
-    void print_outcome(int amount);         // output function, called by score_round()
+    void print_outcome(BlackjackOutcome outcome);         // output function, called by score_round()
     // additional and testing functions:
     public:
     void change_name(std::string name);
@@ -102,7 +102,7 @@ class BlackjackDeck : public Deck
     bool is_bust(int player_id) const;
     bool has_natural(int player_id) const;
     void print_cards(Player& player, bool dealer_hide_card = true) const;      // output function
-    BlackjackOutcome calculate_win(int player_id) const;
+    BlackjackOutcome calculate_win(Player& player) const;
     // move all played cards to discard
     // check if available cards < 50 then reshuffle
     void clear_the_table(std::mt19937 gen);
