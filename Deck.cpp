@@ -409,7 +409,7 @@ void BlackjackDeck::print_cards(Player& player, bool dealer_hide_card) const
         {
             if ( player.get_id() == CardHolder::DEALER && dealer_hide_card && count > 0)
             {
-                std::cout << "a Card Face Down\n";
+                std::cout << "a Card Face Down";
                 ++count;
             }
             else

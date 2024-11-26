@@ -6,23 +6,12 @@ void print_blackjack_welcome();
 
 int main()
 {
-
-    // Same as RandomGenerator but in main:
-    // std::random_device rd;
-    // std::seed_seq ss { rd(), rd(), rd(), rd() };
-    // std::mt19937 mt_rand{ ss };
-
     RandomGenerator gen{};
     BlackjackDeck deck{ 6 , gen.m_mt_rand };
     std::vector<Player> players { {"Player 1"}, {"Player 2"} };
     Player dealer { "House", CardHolder::DEALER };
     int next_id { 1 };
 
-    // std::cout << Cards::value_out.at(1) << "\n";
-
-    /**
-     * TODO: Implement Card Dealer in main 
-     */
 
     // -- WELCOME --
     // output: print welcome info and game rules
