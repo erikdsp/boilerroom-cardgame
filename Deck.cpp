@@ -104,14 +104,28 @@ BlackjackRules::HitOrStand Player::hit_or_stand()
 }
 
 // update each player with outcome from BlackjackDeck::calculate_win()
-void Player::score_round(BlackjackOutcome outcome)
+int Player::score_round(BlackjackOutcome outcome)
 {
-    std::cout << m_name << " called score_round() with outcome " << static_cast<int>(outcome) << " (cast to int) \n";
-    // NATURAL 
-            // NATURAL    (purse += current_bid * 2.5, current_bid = 0)
-            // WINNER              (purse += current_bid * 2, current_bid = 0)
-            // BUST if player < dealer nothing                       (current_bid = 0)
-            // DRAW if player == dealer, bid is returned             (purse += current_bid, current_bid = 0)
+    // print
+    print_outcome(outcome);
+
+    // adjust purse and bid
+    int sum_to_bank{ 0 };
+    if (outcome == BlackjackOutcome::NATURAL) {
+        m_purse += m_current_bid * 2.5;
+        m_current_bid = 0;
+    } else if (outcome == BlackjackOutcome::WINNER) {
+        m_purse += m_current_bid * 2;
+        m_current_bid = 0;
+    } else if (outcome == BlackjackOutcome::DRAW) {
+        m_purse += m_current_bid;
+        m_current_bid = 0;
+    } else {
+        sum_to_bank = m_current_bid;
+        m_current_bid = 0;
+    }
+
+    return sum_to_bank;
 }
 
 // output function, to be called by score_round()

@@ -44,7 +44,7 @@ class Player {
     void enter_bid(int& nxt_id);            // input/output function
     void set_playing(bool b);
     BlackjackRules::HitOrStand hit_or_stand();                    // input/output function
-    void score_round(BlackjackOutcome outcome);
+    int score_round(BlackjackOutcome outcome);
     private:
     void print_outcome(BlackjackOutcome outcome);         // output function, called by score_round()
     // additional and testing functions:

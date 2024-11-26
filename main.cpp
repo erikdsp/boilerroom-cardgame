@@ -36,7 +36,6 @@ int main()
         for (auto& player : players )
         {
             player.enter_bid(next_id);      // pass by reference, if successful will update next_id
-            // std::cout << player.get_name() << " playing: " << player.is_playing() << " id: " << player.get_id() << "\n";    // test output
         }
 
         // -- DEALING CARDS --
@@ -107,7 +106,6 @@ int main()
 
         int dealer_min{};    
         int dealer_max{ deck.max_value(CardHolder::DEALER) };
-        // bool dealer_has_natural { deck.has_natural(CardHolder::DEALER) };
         bool dealer_playing{ dealer_max < 17 };
         while (dealer_playing)
         {
@@ -119,17 +117,19 @@ int main()
             {
                 dealer_playing = false;
             }
-            // dealer_playing = false;     // dummy - remove when functions are implemented
         }
 
         // -- CALCULATE WINNER --
             for ( auto& player : players )
             {
-                // calculates outcome
-                BlackjackOutcome player_result = deck.calculate_win(player);  
+                if (player.get_id() > 0)    // players in the game has id > 0
+                {
+                    // calculates outcome
+                    BlackjackOutcome player_result = deck.calculate_win(player);  
                 
-                // prints outcome and updates player's purse
-                player.score_round(player_result);
+                    // prints outcome and updates player's purse
+                    player.score_round(player_result);
+                }
             }
 
         // -- CLEAR THE TABLE --
