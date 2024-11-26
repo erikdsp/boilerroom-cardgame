@@ -34,28 +34,45 @@ bool Player::is_playing()
 }
 
 // input/output function, to be called from main
-// gör som returnerar int istället - förslag från Oscar
 void Player::enter_bid(int& nxt_id)
 {
     int bid{0};
+    int input{};
+    bool test{true};
     std::cout << get_name() << ", please enter a bid (minimum 10 SEK) or 0 to opt out of game: ";
-    while (bid > 0)
+    while (std::cin >> bid)
     {
-        std::cin >> bid;
-        if (m_purse > bid)
+        if (bid == 0)
         {
+            std::cout << m_name << " opting out of game\n";
+            break;
+        }
+        else if (bid < BlackjackRules::minimum_bid)
+        {
+            std::cout << "Bid too low. \n";
+            if (m_purse < bid )
+            {
+                std::cout << "Not enough money. \n";
+                break;
+            } 
+        }
+        else if (m_purse < bid)
+        {
+                std::cout << "Not enough money to bid. \n";
+                break;
+        }
+        else
+        {
+            std::cout << m_name << " entering game with bid of " << bid << " SEK\n";
             m_current_bid = bid;
             m_purse -= bid;
             m_id = nxt_id;
             nxt_id++;
-        }
-        else
-        {
-            std::cout << "Bid too low. ";
+            break;
         }
     }
     // if (m_purse > bid) {m_current_bid = bid, m_purse -= bid}
-    std::cout << m_name << " called enter_bid() with nxt_id " << nxt_id << "\n";
+    // std::cout << m_name << " called enter_bid() with nxt_id " << nxt_id << "and bid " << bid << "\n";
 
 }  
 

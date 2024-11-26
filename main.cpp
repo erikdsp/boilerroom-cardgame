@@ -1,10 +1,6 @@
 #include "Deck.h"
 #include <iostream>
 
-namespace BlackjackRules
-{
-    const int minimum_bid {10};     // currency is SEK
-}
 
 void print_blackjack_welcome();
 

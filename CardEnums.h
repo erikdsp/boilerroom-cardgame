@@ -44,4 +44,10 @@ enum class BlackjackOutcome {
         DRAW
 };
 
+namespace BlackjackRules
+{
+    const int minimum_bid {10};     // currency is SEK
+}
+
+
 #endif
