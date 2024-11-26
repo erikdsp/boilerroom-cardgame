@@ -34,8 +34,8 @@ int main()
         for (auto player : players)
         {
             player.enter_bid(next_id);      // pass by reference, if successful will update next_id
-            // std::cout << player.is_playing();
         }
+
         // -- DEALING CARDS --
         for (int i = 0 ; i < 2 ; ++i)
         {

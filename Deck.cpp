@@ -33,7 +33,10 @@ bool Player::is_playing()
     return m_playing;
 }
 
-// input/output function, to be called from main
+/**  
+ * TODO: add error checking for std::cin
+ * @param nxt_id pass by reference. On success will update caller value
+ * */ 
 void Player::enter_bid(int& nxt_id)
 {
     int bid{0};
@@ -49,7 +52,7 @@ void Player::enter_bid(int& nxt_id)
         }
         else if (bid < BlackjackRules::minimum_bid)
         {
-            std::cout << "Bid too low. \n";
+            std::cout << "Bid too low. Please enter a valid bid or 0: ";
             if (m_purse < bid )
             {
                 std::cout << "Not enough money. \n";
@@ -66,14 +69,10 @@ void Player::enter_bid(int& nxt_id)
             std::cout << m_name << " entering game with bid of " << bid << " SEK\n";
             m_current_bid = bid;
             m_purse -= bid;
-            m_id = nxt_id;
-            nxt_id++;
+            m_id = nxt_id++;
             break;
         }
     }
-    // if (m_purse > bid) {m_current_bid = bid, m_purse -= bid}
-    // std::cout << m_name << " called enter_bid() with nxt_id " << nxt_id << "and bid " << bid << "\n";
-
 }  
 
 // input/output function, to be called from main
