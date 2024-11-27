@@ -23,7 +23,7 @@ Game::Game() : house{}, dealer{}, spots{{}, {}, {}, {}, {}, {}, {}},
             }
         }
     }
-    dealer.reshuffle(cards_in);
+    dealer.reshuffle(std::move(cards_in));
 }
 
 void Game::join_game(Player* new_player){

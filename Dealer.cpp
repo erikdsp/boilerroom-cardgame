@@ -70,11 +70,11 @@ Deal::Deal() : cards{} {
 
 }
 
-Deal::Deal(Card card) : cards{{std::move(card)}}{
+Deal::Deal(Card&& card) : cards{{std::move(card)}}{
 
 }
 
-void Deal::add_card(Card c){
+void Deal::add_card(Card&& c){
     cards.push_back(c);
 }
 
@@ -159,8 +159,8 @@ bool Deal::splittable() const{
     return false;
 }
 
-Deal& operator+= (Deal& lhs, Card& rhs){
-    lhs.add_card(rhs);
+Deal& operator+= (Deal& lhs, Card&& rhs){
+    lhs.add_card(std::move(rhs));
     return lhs;
 }
 
@@ -200,10 +200,10 @@ Deck::Deck() : gen{std::random_device{}()}{
 
 }
 
-Deck::Deck(std::vector<Card> in) : 
+Deck::Deck(std::vector<Card>&& in) : 
     gen{std::random_device{}()}, 
     cards {in}{
-
+        
 }
 
 Card Deck::draw(){
@@ -217,7 +217,7 @@ Card Deck::draw(){
     return r_card;
 }
 
-void Deck::add_cards(std::vector<Card> in){
+void Deck::add_cards(std::vector<Card>&& in){
     cards.insert(cards.end(), in.rbegin(), in.rend());
 }
 
@@ -239,7 +239,13 @@ CardDealer::CardDealer() :
 
 }
 
-void CardDealer::reshuffle(std::vector<Card> in){
+CardDealer::CardDealer(std::vector<Card>&& in) : 
+    shoe{std::move(in)},
+    discard{} {
+
+}
+
+void CardDealer::reshuffle(std::vector<Card>&& in){
     shoe.add_cards(std::move(in));
     shoe.shuffle();
 }
@@ -248,7 +254,8 @@ void CardDealer::deal(Deal& current_deal){
     current_deal.add_card(shoe.draw());
 }
 
-void CardDealer::discard_deal(std::vector<Card> in){
+//Takes the result of the empty() method of a deal
+void CardDealer::discard_deal(std::vector<Card>&& in){
     discard.insert(discard.end(), in.begin(), in.end());
 }
 

@@ -26,9 +26,9 @@ class Deal {
 
     public:
     Deal();
-    Deal(Card);
+    Deal(Card&&);
 
-    void add_card(Card);
+    void add_card(Card&&);
     Deal split();
 
     friend bool operator< (Card&, Card&);
@@ -57,9 +57,9 @@ class Deck{
 
     public:
     Deck();
-    Deck(std::vector<Card>);
+    Deck(std::vector<Card>&&);
 
-    void add_cards(std::vector<Card>);
+    void add_cards(std::vector<Card>&&);
 
     void shuffle();
     void shuffle(uint32_t); //deterministic "shuffle"
@@ -79,16 +79,20 @@ class CardDealer {
     Deck shoe;
     std::vector<Card> discard;  //used cards go here after being collected
 
+
+
     public:
     CardDealer();
+    CardDealer(std::vector<Card>&&);
 
     void deal(Deal&);
 
-    void reshuffle (std::vector<Card>);
+    void reshuffle (std::vector<Card>&&);
 
+    int size() const;
     int discard_size() const;
 
-    void discard_deal(std::vector<Card>); // takes cards and puts them in discard
+    void discard_deal(std::vector<Card>&&); // takes cards and puts them in discard
 };
 
 #endif
