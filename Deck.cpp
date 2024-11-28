@@ -512,19 +512,3 @@ void BlackjackDeck::cards_left()
 }
 
 
-/** 
- * -- RANDOM GENERATOR --
- * Seeds the Mersenne Twister with a seed sequence with 8 std::random_device
-*/
-RandomGenerator::RandomGenerator()
-    : m_rd{}, 
-      m_sese{ m_rd(), m_rd(), m_rd(), m_rd(), m_rd(), m_rd(), m_rd(), m_rd() }, 
-      m_mt_rand{ m_sese } {}
-
-/** 
- * Seeds the Mersenne Twister with a seed of your choice
-*/
-RandomGenerator::RandomGenerator(uint32_t seed)
-    : m_mt_rand{ seed } {}
-
-

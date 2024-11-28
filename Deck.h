@@ -116,20 +116,6 @@ class BlackjackDeck : public Deck
 };
 
 
-/** RandomGenerator 
- * constructor seeds a Mersenne Twister with at sequence of std::random_device values
- */
-class RandomGenerator 
-{
-    private:
-    std::random_device m_rd;
-    std::seed_seq m_sese;
-    public:
-    std::mt19937 m_mt_rand;
-    public:
-    RandomGenerator();          // seeds with std::random_device
-    RandomGenerator(uint32_t seed);  // provide your own seed for deterministic "shuffle"
-};
 
 
 
