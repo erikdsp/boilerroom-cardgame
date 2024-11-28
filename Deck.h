@@ -62,6 +62,10 @@ class Player {
  * function to shuffle deck
  */
 class Deck{
+    private:
+    std::random_device m_rd;
+    std::seed_seq m_sese;
+    std::mt19937 m_mt_rand;
     protected:
     // container for the cards, a card contains info about who holds it
     std::vector<Card> m_cards;
@@ -69,7 +73,6 @@ class Deck{
     public:
     Deck();
     Deck(int num_of_decks);
-    Deck(int num_of_decks, std::mt19937 gen);
     Deck(std::vector<Card> cards);                // for debugging only
 
     private:
@@ -80,7 +83,7 @@ class Deck{
     public:
     int print_cards(); // testing
     // shuffle the current deck held in m_cards
-    void shuffle_deck(std::mt19937 gen);
+    void shuffle_deck();    
 
 };
 
@@ -92,7 +95,7 @@ class BlackjackDeck : public Deck
 {
     public:
     BlackjackDeck();
-    BlackjackDeck(int num_of_decks, std::mt19937 gen);
+    BlackjackDeck(int num_of_decks);
     BlackjackDeck(std::vector<Card> cards);       // for debugging only
     public:
     // give a card a player id
@@ -105,7 +108,7 @@ class BlackjackDeck : public Deck
     BlackjackOutcome calculate_win(Player& player) const;
     // move all played cards to discard
     // check if available cards < 50 then reshuffle
-    void clear_the_table(std::mt19937 gen);
+    void clear_the_table();
     // test
     void cards_left();
              

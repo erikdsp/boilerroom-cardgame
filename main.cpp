@@ -7,8 +7,7 @@ const int find_next_id(std::vector<Player> p);
 
 int main()
 {
-    RandomGenerator gen{};
-    BlackjackDeck deck{ 6 , gen.m_mt_rand };
+    BlackjackDeck deck{ 6 };
     std::vector<Player> players { {"Player 1"}, {"Player 2"} };
     Player dealer { "House", CardHolder::DEALER };
 
@@ -121,7 +120,7 @@ int main()
             }
 
         // -- CLEAR THE TABLE --
-        deck.clear_the_table(gen.m_mt_rand);
+        deck.clear_the_table();
 
         // -- PLAY ANOTHER ROUND --
         // output: prompt

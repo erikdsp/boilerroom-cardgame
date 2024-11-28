@@ -166,26 +166,26 @@ void Player::set_id(int id)
  * -- DECK --
 */
 
-Deck::Deck() {}
-
-Deck::Deck(int num_of_decks)
-    : m_cards{} 
-{
-    add_standard_decks(num_of_decks);
-}
-
+Deck::Deck() 
+    : m_rd{}, 
+      m_sese{ m_rd(), m_rd(), m_rd(), m_rd(), m_rd(), m_rd(), m_rd(), m_rd() }, 
+      m_mt_rand{ m_sese } {}
 
 /**  
  * Constructor adds n standard 52 cards and shuffles the deck
  * @param num_of_decks  number of decks to add
- * @param gen           a random generator, e.g. Mersenne Twister
  */
-Deck::Deck(int num_of_decks, std::mt19937 gen)
-    : m_cards{} 
+Deck::Deck(int num_of_decks)
+    : m_rd{}, 
+      m_sese{ m_rd(), m_rd(), m_rd(), m_rd(), m_rd(), m_rd(), m_rd(), m_rd() }, 
+      m_mt_rand{ m_sese }, 
+      m_cards{} 
 {
     add_standard_decks(num_of_decks);
-    shuffle_deck(gen);
+    shuffle_deck();
 }
+
+
 
 /**  
  * Constructor for debugging - adds cards of your choice
@@ -252,11 +252,12 @@ int Deck::print_cards()
  * For C++11 compilers see commented out std::shuffle
  * @param r random generator
  */
-void Deck::shuffle_deck(std::mt19937 r)
+void Deck::shuffle_deck()
 {
     // std::shuffle(m_cards.begin(), m_cards.end(), r);     // For C++11 compilers
-    std::ranges::shuffle(m_cards, r);                       // C++20
+    std::ranges::shuffle(m_cards, m_mt_rand);                       // C++20
 }
+
 
 
 /** 
@@ -266,8 +267,8 @@ void Deck::shuffle_deck(std::mt19937 r)
 BlackjackDeck::BlackjackDeck() 
     : Deck(){}
 
-BlackjackDeck::BlackjackDeck(int num_of_decks, std::mt19937 gen)
-    : Deck(num_of_decks, gen) {}
+BlackjackDeck::BlackjackDeck(int num_of_decks)
+    : Deck(num_of_decks) {}
 
 BlackjackDeck::BlackjackDeck(std::vector<Card> cards)
     : Deck(cards) {}
@@ -472,7 +473,7 @@ BlackjackOutcome BlackjackDeck::calculate_win(Player& player) const
 }
 
 // function to prepare deck for next round
-void BlackjackDeck::clear_the_table(std::mt19937 gen)
+void BlackjackDeck::clear_the_table()
 {
     int cards_left{0};
     
@@ -492,10 +493,11 @@ void BlackjackDeck::clear_the_table(std::mt19937 gen)
         for (auto& card : m_cards){
             card.card_holder = CardHolder::DECK;
         }
-        shuffle_deck(gen);
+        shuffle_deck();
     }
 
 } 
+
 
 // test
 void BlackjackDeck::cards_left()
