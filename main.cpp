@@ -46,9 +46,18 @@ int main()
             }
         }
 
-
-        // check for natural
+        // -- CHECK FOR NATURAL -- 
         // if a player has a natural, dealer does not show card. But evaluate against player
+        for (auto& player : players)
+        {
+            if (deck.has_natural(player.get_id()))
+            {
+                // calculates outcome
+                BlackjackOutcome player_result = deck.calculate_win(player);                  
+                // prints outcome, updates player's purse and resets player id
+                player.score_round(player_result);
+            }
+        }
 
         // -- HIT OR STAND --
         bool players_to_play {true};

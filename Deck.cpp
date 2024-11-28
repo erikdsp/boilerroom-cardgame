@@ -124,6 +124,10 @@ int Player::score_round(BlackjackOutcome outcome)
         sum_to_bank = m_current_bid;
         m_current_bid = 0;
     }
+    // reset player id to 0
+    m_id = 0;
+    // in case of natural this is set to false
+    m_playing = false;
 
     return sum_to_bank;
 }
