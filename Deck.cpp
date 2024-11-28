@@ -33,11 +33,11 @@ bool Player::is_playing()
     return m_playing;
 }
 
+
 /**  
  * TODO: add error checking for std::cin
- * @param nxt_id pass by reference. On success will update caller value
  * */ 
-void Player::enter_bid(int& nxt_id)
+void Player::enter_bid(int id)
 {
     int bid{0};
     int input{};
@@ -70,7 +70,7 @@ void Player::enter_bid(int& nxt_id)
             m_current_bid = bid;
             m_purse -= bid;
             m_playing = true;
-            m_id = nxt_id++;
+            m_id = id;
             break;
         }
     }

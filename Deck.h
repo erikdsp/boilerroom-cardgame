@@ -41,7 +41,7 @@ class Player {
     int get_id();
     std::string get_name();
     bool is_playing();
-    void enter_bid(int& nxt_id);            // input/output function
+    void enter_bid(int id);            // input/output function
     void set_playing(bool b);
     BlackjackRules::HitOrStand hit_or_stand();                    // input/output function
     int score_round(BlackjackOutcome outcome);

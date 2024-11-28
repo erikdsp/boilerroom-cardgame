@@ -3,6 +3,7 @@
 
 
 void print_blackjack_welcome();
+const int find_next_id(std::vector<Player> p);
 
 int main()
 {
@@ -10,8 +11,6 @@ int main()
     BlackjackDeck deck{ 6 , gen.m_mt_rand };
     std::vector<Player> players { {"Player 1"}, {"Player 2"} };
     Player dealer { "House", CardHolder::DEALER };
-    int next_id { 1 };
-
 
     // -- WELCOME --
     // output: print welcome info and game rules
@@ -24,7 +23,7 @@ int main()
         // enter bids, loop through players and ask for bid
         for (auto& player : players )
         {
-            player.enter_bid(next_id);      // pass by reference, if successful will update next_id
+            player.enter_bid(find_next_id(players));      // pass by reference, if successful will update next_id
         }
 
         // -- DEALING CARDS --
@@ -148,4 +147,14 @@ void print_blackjack_welcome()
               << "                                            '''                             \n"
               << "                         A GAME BY SUVX24 GBG                               \n\n";
  
+}
+
+const int find_next_id(std::vector<Player> p)
+{
+    int id{0};
+    for (auto& player : p)
+    {
+        if (player.get_id() >= id) id = player.get_id() + 1;
+    }
+    return id;
 }
