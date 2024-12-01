@@ -18,7 +18,7 @@ Player::Player()
 Player::Player(std::string name, int id, double purse)
     : m_name { name }, m_id { id }, m_purse { purse } {}
 
-int Player::get_id()
+int Player::get_id() const
 {
     return m_id;
 }

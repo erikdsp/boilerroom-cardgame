@@ -38,7 +38,7 @@ class Player {
     public:
     Player();
     Player(std::string name, int id = 0, double purse = 1000);
-    int get_id();
+    int get_id() const;
     std::string get_name();
     bool is_playing();
     void enter_bid(int id);            // input/output function

@@ -1,9 +1,10 @@
 #include "Deck.h"
 #include <iostream>
-
+using Players = std::vector<Player>;
 
 void print_blackjack_welcome();
-const int find_next_id(std::vector<Player> p);
+const int find_next_id(const Players& p);
+bool play_again();
 
 int main()
 {
@@ -132,9 +133,8 @@ int main()
         deck.clear_the_table();
 
         // -- PLAY ANOTHER ROUND --
-        // output: prompt
-        // input: y or n
-        game_open = false;  // dummy - remove when functions are implemented
+        game_open = play_again();
+
     }
     
 
@@ -157,7 +157,7 @@ void print_blackjack_welcome()
  
 }
 
-const int find_next_id(std::vector<Player> p)
+const int find_next_id(const Players& p)
 {
     int id{0};
     for (auto& player : p)
@@ -165,4 +165,24 @@ const int find_next_id(std::vector<Player> p)
         if (player.get_id() >= id) id = player.get_id() + 1;
     }
     return id;
+}
+
+bool play_again()
+{
+    std::string input{};
+    std::cout << "q)Quit, p)Play another round -> ";
+
+    while(std::cin >> input)
+    {
+        switch (input.at(0))
+        {
+            case 'q':
+                return false;   
+            case 'p':
+                return true;
+            default:
+            std::cout << "Invalid option. q)Quit, p)Play another round -> ";
+        }
+    }
+    return true;
 }
