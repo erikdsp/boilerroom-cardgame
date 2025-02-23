@@ -62,6 +62,7 @@ int main()
 
         // -- HIT OR STAND --
         bool players_to_play {true};
+        int last_active_player{};       // used to avoid excessive printing
         while (players_to_play)
         {    
             int count = 0; 
@@ -75,8 +76,11 @@ int main()
                 // ask active players for hit or stand
                 if (player.is_playing()) 
                 {
+                    // print player's hand if it's not the last thing printed
+                    if (player.get_id() != last_active_player) deck.print_cards(player);
+                    // the heart of the game
                     BlackjackRules::HitOrStand decision = player.hit_or_stand();
-                    // std::cout << "Hit: " << decision << "\n";
+                    last_active_player = player.get_id();
                     if (decision == BlackjackRules::HIT)
                     {
                         deck.draw_card(player.get_id());
